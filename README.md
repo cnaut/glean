@@ -1,4 +1,4 @@
 glean
 =====
 
-G-Lean fitness app
+GLean fitness app
