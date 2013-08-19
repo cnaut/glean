@@ -17,7 +17,7 @@ app.get('/', function(request, response) {
 	getBodyFatInputs, 
 	//function(results) { response.send(results.get_Response()); },
 	function(results) { response.send("HERE"); },
-	function(error) { console.log(error.message); }
+	function(error) { response.send(error.message); console.log(error.message); }
     );
 });
 
