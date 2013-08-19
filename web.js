@@ -1,4 +1,4 @@
-var express = require('express')
+var express = require('express');
 var fs = require('fs');
 var tsession = require("temboo/core/temboosession");
 var Fitbit = require("temboo/Library/Fitbit/Body");
@@ -11,6 +11,7 @@ app.get('/', function(request, response) {
 
     getBodyFatInputs.setCredential('Fitbit');
     getBodyFatInputs.set_Date("2013-07-01/2013-07-14");
+
 
 
     getBodyFatChoreo.execute(
