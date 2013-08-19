@@ -9,9 +9,12 @@ app.get('/', function(request, response) {
     var getBodyFatChoreo = new Fitbit.GetBodyFat(session); 
     var getBodyFatInputs = getBodyFatChoreo.newInputSet();
 
-    getBodyFatInputs.setCredential('Fitbit');
+    //getBodyFatInputs.setCredential('Fitbit');
+    getBodyFatInputs.set_ConsumerKey(process.env.FITBIT_CONSUMER_KEY);
+    getBodyFatInputs.set_ConsumerSecret(process.env.FITBIT_CONSUMER_SECRET);
+    getBodyFatInputs.set_AccessToken(process.env.FITBIT_ACCESS_TOKEN);
+    getBodyFatInputs.set_AcessTokenSecretT(process.env.FITBIT_ACCESS_TOKEN_SECRET);
     getBodyFatInputs.set_Date("2013-07-01/2013-07-14");
-
 
 
     getBodyFatChoreo.execute(
