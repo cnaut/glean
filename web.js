@@ -19,8 +19,6 @@ app.get('/', function(request, response) {
 	function(results) { response.send("HERE"); },
 	function(error) { console.log(error.message); }
     );
-
-response.send("Test statement");
 });
 
 var port = process.env.PORT || 8080;
