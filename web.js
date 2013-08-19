@@ -14,7 +14,8 @@ app.get('/', function(request, response) {
 
     getBodyFatChoreo.execute(
 	getBodyFatInputs, 
-	function(results) { response.send(results.get_Response()); },
+	//function(results) { response.send(results.get_Response()); },
+	function(results) { response.send("HERE"); },
 	function(error) { console.log(error.message); }
     );
 });
