@@ -12,3 +12,6 @@ logs
 results
 
 npm-debug.log
+
+#Heroku environmental variables and API keys
+.env
