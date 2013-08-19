@@ -12,12 +12,15 @@ app.get('/', function(request, response) {
 //    getBodyFatInputs.setCredential('Fitbit');
 //   getBodyFatInputs.set_Date("2013-07-01/2013-07-14");
 
+/*
     getBodyFatChoreo.execute(
 	getBodyFatInputs, 
 	//function(results) { response.send(results.get_Response()); },
 	function(results) { response.send("HERE"); },
 	function(error) { console.log(error.message); }
-    );
+*/
+response.send("Test statement");
+   // );
 });
 
 var port = process.env.PORT || 8080;
