@@ -6,11 +6,11 @@ var Fitbit = require("temboo/Library/Fitbit/Body");
 
 var app = express();
 app.get('/', function(request, response) {
-    var getBodyFatChoreo = new Fitbit.GetBodyFat(session); 
-    var getBodyFatInputs = getBodyFatChoreo.newInputSet();
+//    var getBodyFatChoreo = new Fitbit.GetBodyFat(session); 
+//    var getBodyFatInputs = getBodyFatChoreo.newInputSet();
 
-    getBodyFatInputs.setCredential('Fitbit');
-    getBodyFatInputs.set_Date("2013-07-01/2013-07-14");
+//    getBodyFatInputs.setCredential('Fitbit');
+//   getBodyFatInputs.set_Date("2013-07-01/2013-07-14");
 
     getBodyFatChoreo.execute(
 	getBodyFatInputs, 
