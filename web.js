@@ -1,11 +1,11 @@
 var express = require('express')
 var fs = require('fs');
 var tsession = require("temboo/core/temboosession");
-var session = new tsession.TembooSession("glean", process.env.TEMBOO_APP_NAME, process.env.TEMBOO_APP_KEY);
 var Fitbit = require("temboo/Library/Fitbit/Body");
 
 var app = express();
 app.get('/', function(request, response) {
+    var session = new tsession.TembooSession("glean", process.env.TEMBOO_APP_NAME, process.env.TEMBOO_APP_KEY);
     var getBodyFatChoreo = new Fitbit.GetBodyFat(session); 
     var getBodyFatInputs = getBodyFatChoreo.newInputSet();
 
