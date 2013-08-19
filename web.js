@@ -13,7 +13,7 @@ app.get('/', function(request, response) {
     getBodyFatInputs.set_ConsumerKey(process.env.FITBIT_CONSUMER_KEY);
     getBodyFatInputs.set_ConsumerSecret(process.env.FITBIT_CONSUMER_SECRET);
     getBodyFatInputs.set_AccessToken(process.env.FITBIT_ACCESS_TOKEN);
-    getBodyFatInputs.set_AcessTokenSecret(process.env.FITBIT_ACCESS_TOKEN_SECRET);
+    getBodyFatInputs.set_AccessTokenSecret(process.env.FITBIT_ACCESS_TOKEN_SECRET);
     getBodyFatInputs.set_Date("2013-07-01/2013-07-14");
 
 
