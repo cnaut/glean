@@ -5,6 +5,9 @@ var session = new tsession.TembooSession(process.env.TEMBOO_ACCOUNT_NAME, proces
 var Fitbit = require("temboo/Library/Fitbit/Body");
 
 var app = express();
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+
 app.get('/', function(request, response) {
     var getBodyFatChoreo = new Fitbit.GetBodyFat(session); 
     var getBodyFatInputs = getBodyFatChoreo.newInputSet();
@@ -16,7 +19,7 @@ app.get('/', function(request, response) {
 	getBodyFatInputs, 
 	function(results) { 
 	    var fat = JSON.parse(results.get_Response())["fat"][0]["fat"];
-	    response.send("Fat: " + fat)
+	    response.render("status", { fat: fat });
 	},
 	function(error) { console.log(error.message); }
     );
