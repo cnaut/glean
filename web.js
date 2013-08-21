@@ -10,11 +10,14 @@ app.get('/', function(request, response) {
     var getBodyFatInputs = getBodyFatChoreo.newInputSet();
 
     getBodyFatInputs.setCredential('Fitbit');
-    getBodyFatInputs.set_Date("2013-07-01/2013-07-14");
+    getBodyFatInputs.set_Date("2013-08-20");
 
     getBodyFatChoreo.execute(
 	getBodyFatInputs, 
-	function(results) { response.send(results.get_Response()); },
+	function(results) { 
+	    var fat = JSON.parse(results.get_Response())["fat"][0]["fat"];
+	    response.send("Fat: " + fat)
+	},
 	function(error) { console.log(error.message); }
     );
 });
