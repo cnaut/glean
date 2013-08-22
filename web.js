@@ -13,13 +13,20 @@ app.get('/', function(request, response) {
     var getBodyFatInputs = getBodyFatChoreo.newInputSet();
 
     getBodyFatInputs.setCredential('Fitbit');
-    getBodyFatInputs.set_Date("2013-08-20");
+    
+    var today = new Date();
+    var todayFormatted = today.toISOString().slice(0, 10);
+    //console.log(todayFormatted);
+    console.log(getBodyFatInputs.set_Date(todayFormatted + "/1w"));
 
     getBodyFatChoreo.execute(
 	getBodyFatInputs, 
 	function(results) { 
-	    var fat = JSON.parse(results.get_Response())["fat"][0]["fat"];
-	    response.render("status", { fat: fat });
+	    var fatData = JSON.parse(results.get_Response())["fat"];
+	    var fatEntries = fatData.length;
+	    var latestFat = fatData[fatEntries - 1]["fat"];
+	    var latestDate = fatData[fatEntries - 1]["date"];
+	    response.render("status", { fat: latestFat, date: latestDate });
 	},
 	function(error) { console.log(error.message); }
     );
