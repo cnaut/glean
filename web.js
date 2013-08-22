@@ -8,6 +8,8 @@ var app = express();
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+app.use(express.static(__dirname + '/public'));
+
 app.get('/', function(request, response) {
     var getBodyFatChoreo = new Fitbit.GetBodyFat(session); 
     var getBodyFatInputs = getBodyFatChoreo.newInputSet();
@@ -16,8 +18,7 @@ app.get('/', function(request, response) {
     
     var today = new Date();
     var todayFormatted = today.toISOString().slice(0, 10);
-    //console.log(todayFormatted);
-    console.log(getBodyFatInputs.set_Date(todayFormatted + "/1w"));
+    getBodyFatInputs.set_Date(todayFormatted + "/1w");
 
     getBodyFatChoreo.execute(
 	getBodyFatInputs, 
