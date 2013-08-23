@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-	<title>glean status</title>
-	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css">
-    </head>
+  <head>
+    <title>glean status</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
 
-    <body>
-	<h2>Status: <%= fat %></h2>
-	<h2>Date: <%= date %></h2>
-    </body>
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+	</div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+	<div class=span12>
+	  <h2>Body Fat <%= fat %>%</h2>
+	  <div class="progress" style="width:25%">
+	    <div class="bar bar-danger" style="width: <%= fat %>%"></div>
+	    <div class="bar bar-success" style="width: <%= 100 - fat %>%"></div>
+	  </div>
+
+	  <h2>Date <%= date %></h2>
+	</div>
+      </div>
+    </div>
+  </body>
 </html>

@@ -19,7 +19,7 @@ app.get('/', function(request, response) {
     var today = new Date();
     var todayFormatted = today.toISOString().slice(0, 10);
     getBodyFatInputs.set_Date(todayFormatted + "/1w");
-
+    
     getBodyFatChoreo.execute(
 	getBodyFatInputs, 
 	function(results) { 
