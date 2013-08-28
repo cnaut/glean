@@ -27,7 +27,13 @@ app.get('/', function(request, response) {
 	    var fatEntries = fatData.length;
 	    var latestFat = fatData[fatEntries - 1]["fat"];
 	    var latestDate = fatData[fatEntries - 1]["date"];
-	    response.render("status", { fat: latestFat, date: latestDate });
+
+	    var fatPercents = [];
+	    for(var i = 0; i < fatEntries; i++) {
+		fatPercents.push(fatData[i]["fat"]);
+	    }
+	    fatPercents = JSON.stringify(fatPercents)
+	    response.render("status", { fatPercents: fatPercents, fat: latestFat, date: latestDate });
 	},
 	function(error) { console.log(error.message); }
     );
