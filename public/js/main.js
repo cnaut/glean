@@ -1,5 +1,5 @@
 function generateChart() {
-    var chart = d3.select("body").append("div")
+    var chart = d3.select("#content").append("div")
 	.attr("class", "chart");
 
     var fatPercents = JSON.parse(document.body.getAttribute("fatpercents"))
