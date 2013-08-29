@@ -5,8 +5,10 @@ body {
 .chart div {
   font: 10px sans-serif;
   background-color: steelblue;
-  text-align: right;
-  padding: 3px;
-  margin 1px;
   color: white;
+  display: inline-block;
+  padding: 3px;
+  margin: 2px;
+  vertical-align: bottom;
+  overflow: hidden;
 }
