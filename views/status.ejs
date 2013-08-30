@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/main.css">
   </head>
 
-  <body onload="generateChart();" fatpercents="<%= fatPercents %>">
+  <body onload="generateChart();" predicteddata="<%= predictedData %>" fatpercents="<%= fatPercents %>">
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -19,13 +19,14 @@
       <div class="row-fluid">
 	<div class=span12>
 	  <h2>Body Fat</h2>
-	  <h2><%= fat %>%</h2>
-	  <h2><%= date %></h2>
+	  <h3><%= fat %>%</h3>
+	  <h3><%= date %></h3>
 	  <div class="progress" style="width:25%">
 	    <div class="bar bar-danger" style="width: <%= fat %>%"></div>
 	    <div class="bar bar-success" style="width: <%= 100 - fat %>%"></div>
 	  </div>
-
+	  
+	  <div id="charts"></div>
 	</div>
       </div>
     </div>

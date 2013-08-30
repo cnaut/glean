@@ -2,13 +2,24 @@ body {
   padding-top: 60px;
 }
 
+#charts div {
+  display: inline-block;
+}
+
 .chart div {
   font: 10px sans-serif;
-  background-color: steelblue;
   color: white;
   display: inline-block;
   padding: 3px;
   margin: 2px;
   vertical-align: bottom;
   overflow: hidden;
+}
+
+#historical-chart div {
+  background-color: steelblue;
+}
+
+#predicted-chart div {
+  background-color: orange;
 }
