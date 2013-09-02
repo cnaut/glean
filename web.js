@@ -19,7 +19,7 @@ app.get('/', function(request, response) {
     var today = new Date();
     var todayFormatted = today.toISOString().slice(0, 10);
     getBodyFatInputs.set_Date(todayFormatted + "/1w");
-    
+
     getBodyFatChoreo.execute(
 	getBodyFatInputs, 
 	function(results) { 
@@ -27,13 +27,39 @@ app.get('/', function(request, response) {
 	    var fatEntries = fatData.length;
 	    var latestFat = fatData[fatEntries - 1]["fat"];
 	    var latestDate = fatData[fatEntries - 1]["date"];
-
+	   
+	    var xSum = 0;
+	    var xSquaredSum = 0;
+	    var ySum = 0;
+	    var xySum = 0;
 	    var fatPercents = [];
 	    for(var i = 0; i < fatEntries; i++) {
-		fatPercents.push(fatData[i]["fat"]);
+		var currFat = fatData[i]["fat"];
+		fatPercents.push(currFat);
+		xSum += i;
+		xSquaredSum += i * i;
+		ySum += currFat;
+		xySum += currFat * i; 
 	    }
-	    fatPercents = JSON.stringify(fatPercents)
-	    response.render("status", { fatPercents: fatPercents, fat: latestFat, date: latestDate });
+
+	    var xMean = xSum / fatEntries;
+	    var xSquaredMean = xSquaredSum / fatEntries;
+	    var yMean = ySum / fatEntries;
+	    var xyMean = xySum / fatEntries;
+
+	    var slope = (xMean * yMean) - xyMean;
+	    slope = slope / ((xMean * xMean) - xSquaredMean);
+
+	    var yIntercept = yMean - (slope * xMean);
+
+	    var predictedValue = (slope * fatEntries) + yIntercept;
+	    var predictedData = [];
+	    predictedData.push(predictedValue);
+
+	    predictedData = JSON.stringify(predictedData);
+	    fatPercents = JSON.stringify(fatPercents);
+	    
+	    response.render("status", { fatPercents: fatPercents, fat: latestFat, date: latestDate, predictedData: predictedData });
 	},
 	function(error) { console.log(error.message); }
     );
