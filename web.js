@@ -52,18 +52,36 @@ app.get('/', function(request, response) {
 
 	    var yIntercept = yMean - (slope * xMean);
 
-	    var predictedValue = (slope * fatEntries) + yIntercept;
-	    var predictedData = [];
-	    predictedData.push(predictedValue);
-
-	    predictedData = JSON.stringify(predictedData);
+	    var predictedData = (slope * fatEntries) + yIntercept;
+	    predictedData = JSON.stringify([predictedData]);
+	    
 	    fatPercents = JSON.stringify(fatPercents);
 	    
-	    response.render("status", { fatPercents: fatPercents, fat: latestFat, date: latestDate, predictedData: predictedData });
+	    getBodyFatGoal(response, fatPercents, latestFat, latestDate, predictedData);
 	},
 	function(error) { console.log(error.message); }
     );
 });
+
+var getBodyFatGoal = function(response, fatPercents, latestFat, latestDate, predictedData) {
+    var getBodyFatGoalChoreo = new Fitbit.GetBodyFatGoal(session); 
+    var getBodyFatGoalInputs = getBodyFatGoalChoreo.newInputSet();
+
+    getBodyFatGoalInputs.setCredential('Fitbit');
+    
+    getBodyFatGoalChoreo.execute(
+	getBodyFatGoalInputs,
+	function(results) {
+	    var fatGoal = JSON.stringify([JSON.parse(results.get_Response())["goal"]["fat"]]);
+	    renderStatusPage(response, fatPercents, latestFat, latestDate, predictedData, fatGoal); },
+	function(error) { console.log(error.message); }
+    );
+}
+
+var renderStatusPage = function(response, fatPercents, latestFat, latestDate, predictedData, fatGoal) {
+	    response.render("status", { fatPercents: fatPercents, fat: latestFat, date: latestDate, predictedData: predictedData, fatGoal: fatGoal });
+
+}
 
 var port = process.env.PORT || 8080;
 app.listen(port, function() { 

@@ -25,3 +25,7 @@ body {
 #predicted-chart div {
   background-color: orange;
 }
+
+#goal-chart div {
+  background-color: red;
+}
