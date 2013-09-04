@@ -21,49 +21,52 @@ app.get('/', function(request, response) {
     getBodyFatInputs.set_Date(todayFormatted + "/1w");
 
     getBodyFatChoreo.execute(
-	getBodyFatInputs, 
-	function(results) { 
-	    var fatData = JSON.parse(results.get_Response())["fat"];
-	    var fatEntries = fatData.length;
-	    var latestFat = fatData[fatEntries - 1]["fat"];
-	    var latestDate = fatData[fatEntries - 1]["date"];
-	   
-	    var xSum = 0;
-	    var xSquaredSum = 0;
-	    var ySum = 0;
-	    var xySum = 0;
-	    var fatPercents = [];
-	    for(var i = 0; i < fatEntries; i++) {
-		var currFat = fatData[i]["fat"];
-		fatPercents.push(currFat);
-		xSum += i;
-		xSquaredSum += i * i;
-		ySum += currFat;
-		xySum += currFat * i; 
-	    }
-
-	    var xMean = xSum / fatEntries;
-	    var xSquaredMean = xSquaredSum / fatEntries;
-	    var yMean = ySum / fatEntries;
-	    var xyMean = xySum / fatEntries;
-
-	    var slope = (xMean * yMean) - xyMean;
-	    slope = slope / ((xMean * xMean) - xSquaredMean);
-
-	    var yIntercept = yMean - (slope * xMean);
-
-	    var predictedData = (slope * fatEntries) + yIntercept;
-	    predictedData = JSON.stringify([predictedData]);
-	    
-	    fatPercents = JSON.stringify(fatPercents);
-	    
-	    getBodyFatGoal(response, fatPercents, latestFat, latestDate, predictedData);
-	},
+	getBodyFatInputs,
+	function(results) { getBodyFatData(results, response) },
 	function(error) { console.log(error.message); }
     );
 });
 
-var getBodyFatGoal = function(response, fatPercents, latestFat, latestDate, predictedData) {
+
+function getBodyFatData(results, response) {
+    var fatData = JSON.parse(results.get_Response())["fat"];
+    var fatEntries = fatData.length;
+    var latestFat = fatData[fatEntries - 1]["fat"];
+    var latestDate = fatData[fatEntries - 1]["date"];
+	   
+    var xSum = 0;
+    var xSquaredSum = 0;
+    var ySum = 0;
+    var xySum = 0;
+    var fatPercents = [];
+    for(var i = 0; i < fatEntries; i++) {
+	var currFat = fatData[i]["fat"];
+	fatPercents.push(currFat);
+	xSum += i;
+	xSquaredSum += i * i;
+	ySum += currFat;
+	xySum += currFat * i; 
+    }
+
+    var xMean = xSum / fatEntries;
+    var xSquaredMean = xSquaredSum / fatEntries;
+    var yMean = ySum / fatEntries;
+    var xyMean = xySum / fatEntries;
+
+    var slope = (xMean * yMean) - xyMean;
+    slope = slope / ((xMean * xMean) - xSquaredMean);
+
+    var yIntercept = yMean - (slope * xMean);
+
+    var predictedData = (slope * fatEntries) + yIntercept;
+    predictedData = JSON.stringify([predictedData]);
+	    
+    fatPercents = JSON.stringify(fatPercents);
+	    
+    getBodyFatGoal(response, fatPercents, latestFat, latestDate, predictedData);
+}
+
+function getBodyFatGoal(response, fatPercents, latestFat, latestDate, predictedData) {
     var getBodyFatGoalChoreo = new Fitbit.GetBodyFatGoal(session); 
     var getBodyFatGoalInputs = getBodyFatGoalChoreo.newInputSet();
 
@@ -78,7 +81,7 @@ var getBodyFatGoal = function(response, fatPercents, latestFat, latestDate, pred
     );
 }
 
-var renderStatusPage = function(response, fatPercents, latestFat, latestDate, predictedData, fatGoal) {
+function renderStatusPage(response, fatPercents, latestFat, latestDate, predictedData, fatGoal) {
 	    response.render("status", { fatPercents: fatPercents, fat: latestFat, date: latestDate, predictedData: predictedData, fatGoal: fatGoal });
 
 }
