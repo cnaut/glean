@@ -3,7 +3,7 @@ function generateChart() {
     var predictedData = JSON.parse(document.body.getAttribute("predictedData"));
     var fatGoal = JSON.parse(document.body.getAttribute("fatGoal"));
 
-    var chart1 = d3.select("#charts").append("div")
+    var chart1 = d3.select("#historical-chart-div").append("div")
 	.attr("class", "chart")
 	.attr("id", "historical-chart");
     
@@ -14,7 +14,7 @@ function generateChart() {
 	.style("width", "30px")
 	.text(function(d) { return d; });
     
-    var chart2 = d3.select("#charts").append("div")
+    var chart2 = d3.select("#predicted-chart-div").append("div")
 	.attr("class", "chart")
 	.attr("id", "predicted-chart");
     
@@ -25,7 +25,7 @@ function generateChart() {
 	.style("width", "30px")
 	.text(function(d) { return d; });
     
-    var chart3 = d3.select("#charts").append("div")
+    var chart3 = d3.select("#goal-chart-div").append("div")
 	.attr("class", "chart")
 	.attr("id", "goal-chart");
     

@@ -4,7 +4,11 @@ body {
   text-align: center;
 }
 
-#charts div {
+.chart-div, .chart-container {
+  display: inline-block;
+}
+
+.chart-div div {
   display: inline-block;
 }
 
