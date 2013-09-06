@@ -35,4 +35,15 @@ function generateChart() {
 	.style("height", function(d) { return d * 10 + "px"; })
 	.style("width", "30px")
 	.text(function(d) { return d; });
+
+    var lineGraph = d3.select("#line-graph")
+	.append("svg:svg"); 
+
+    var line = lineGraph.append("svg:line")
+	.attr("x1", 40)
+	.attr("y1", 50)
+	.attr("x2", 450)
+	.attr("y2", 150)
+	.style("stroke", "red");
+	
 }

@@ -26,6 +26,10 @@ body {
   background-color: steelblue;
 }
 
+#line-graph {
+  position: absolute;
+}
+
 #predicted-chart div {
   background-color: orange;
 }
