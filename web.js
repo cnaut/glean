@@ -57,16 +57,22 @@ function getBodyFatData(results, response) {
     slope = slope / ((xMean * xMean) - xSquaredMean);
 
     var yIntercept = yMean - (slope * xMean);
-
     var predictedData = (slope * fatEntries) + yIntercept;
     predictedData = JSON.stringify([predictedData]);
-	    
+  
+    var x1 = 0;
+    var y1 = yIntercept;
+    var x2 = fatEntries - 1;
+    var y2 = (slope * x2) + y1;
+  
     fatPercents = JSON.stringify(fatPercents);
+
+    var data = {fatPercents: fatPercents, latestFat: latestFat, predictedData: predictedData, x1: x1, y1: y1, x2: x2, y2: y2};
 	    
-    getBodyFatGoal(response, fatPercents, latestFat, latestDate, predictedData);
+    getBodyFatGoal(response, data);
 }
 
-function getBodyFatGoal(response, fatPercents, latestFat, latestDate, predictedData) {
+function getBodyFatGoal(response, data) {
     var getBodyFatGoalChoreo = new Fitbit.GetBodyFatGoal(session); 
     var getBodyFatGoalInputs = getBodyFatGoalChoreo.newInputSet();
 
@@ -76,13 +82,14 @@ function getBodyFatGoal(response, fatPercents, latestFat, latestDate, predictedD
 	getBodyFatGoalInputs,
 	function(results) {
 	    var fatGoal = JSON.stringify([JSON.parse(results.get_Response())["goal"]["fat"]]);
-	    renderStatusPage(response, fatPercents, latestFat, latestDate, predictedData, fatGoal); },
+	    data.fatGoal = fatGoal;
+	    renderStatusPage(response, data); },
 	function(error) { console.log(error.message); }
     );
 }
 
-function renderStatusPage(response, fatPercents, latestFat, latestDate, predictedData, fatGoal) {
-	    response.render("status", { fatPercents: fatPercents, fat: latestFat, date: latestDate, predictedData: predictedData, fatGoal: fatGoal });
+function renderStatusPage(response, data) {
+	    response.render("status", data);
 
 }
 
