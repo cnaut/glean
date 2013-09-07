@@ -30,6 +30,10 @@ body {
   position: absolute;
 }
 
+#line-graph svg {
+  width: 478px;
+}
+
 #predicted-chart div {
   background-color: orange;
 }

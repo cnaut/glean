@@ -2,6 +2,11 @@ function generateChart() {
     var fatPercents = JSON.parse(document.body.getAttribute("fatPercents"));
     var predictedData = JSON.parse(document.body.getAttribute("predictedData"));
     var fatGoal = JSON.parse(document.body.getAttribute("fatGoal"));
+    
+    var x1 = JSON.parse(document.body.getAttribute("x1"));
+    var y1 = JSON.parse(document.body.getAttribute("y1"));
+    var x2 = JSON.parse(document.body.getAttribute("x2"));
+    var y2 = JSON.parse(document.body.getAttribute("y2"));
 
     var chart1 = d3.select("#historical-chart-div").append("div")
 	.attr("class", "chart")
@@ -40,10 +45,10 @@ function generateChart() {
 	.append("svg:svg"); 
 
     var line = lineGraph.append("svg:line")
-	.attr("x1", 40)
-	.attr("y1", 50)
-	.attr("x2", 450)
-	.attr("y2", 150)
-	.style("stroke", "red");
-	
+	.attr("x1", x1 + 2)
+	.attr("y1", y1 - 10)
+	.attr("x2", x2 * 50)
+	.attr("y2", y2 - 10)
+	.style("stroke", "red")
+	.style("stroke-width", 2);
 }
