@@ -16,64 +16,15 @@ var statusfn = function(request, response) {
 
     getBodyFatChoreo.execute(
 	getBodyFatInputs,
-	function(results) { getBodyFatData(results, response) },
+	function(results) { 
+	    var fatData = handleBodyData(results, "fat"); 
+	    getBodyFatGoal(response, fatData);
+	},
 	function(error) { console.log(error.message); }
     );
 };
 
-function getBodyFatData(results, response) {
-    var fatData = JSON.parse(results.get_Response())["fat"];
-    var fatEntries = fatData.length;
-    var latestFat = fatData[fatEntries - 1]["fat"];
-    var latestDate = fatData[fatEntries - 1]["date"];
-
-    var weekHigh = 0;
-    var weekLow;
-    var xSum = 0;
-    var xSquaredSum = 0;
-    var ySum = 0;
-    var xySum = 0;
-    var fatPercents = [];
-    for(var i = 0; i < fatEntries; i++) {
-	var currFat = fatData[i]["fat"];
-	fatPercents.push(currFat);
-	xSum += i;
-	xSquaredSum += i * i;
-	ySum += currFat;
-	xySum += currFat * i; 
-
-	if(i == 0 || currFat < weekLow)
-	    weekLow = currFat;
-
-	if(currFat > weekHigh)
-	    weekHigh = currFat;
-    }
-
-    var xMean = xSum / fatEntries;
-    var xSquaredMean = xSquaredSum / fatEntries;
-    var yMean = ySum / fatEntries;
-    var xyMean = xySum / fatEntries;
-
-    var slope = (xMean * yMean) - xyMean;
-    slope = slope / ((xMean * xMean) - xSquaredMean);
-
-    var yIntercept = yMean - (slope * xMean);
-    var predictedData = (slope * fatEntries) + yIntercept;
-    predictedData = JSON.stringify([predictedData]);
-  
-    var x1 = 0;
-    var y1 = yIntercept;
-    var x2 = fatEntries - 1;
-    var y2 = (slope * x2) + y1;
-  
-    fatPercents = JSON.stringify(fatPercents);
-
-    var data = {fatPercents: fatPercents, latestFat: latestFat, weekLow: JSON.stringify([weekLow]), weekHigh: JSON.stringify([weekHigh]), predictedData: predictedData, x1: x1, y1: y1, x2: x2, y2: y2};
-	    
-    getBodyFatGoal(response, data);
-}
-
-function getBodyFatGoal(response, data) {
+function getBodyFatGoal(response, fatData) {
     var getBodyFatGoalChoreo = new Fitbit.GetBodyFatGoal(session); 
     var getBodyFatGoalInputs = getBodyFatGoalChoreo.newInputSet();
 
@@ -83,8 +34,47 @@ function getBodyFatGoal(response, data) {
 	getBodyFatGoalInputs,
 	function(results) {
 	    var fatGoal = JSON.stringify([JSON.parse(results.get_Response())["goal"]["fat"]]);
-	    data.fatGoal = fatGoal;
-	    renderStatusPage(response, data); },
+	    fatData.goal = fatGoal;
+	    getBodyWeight(response, fatData); 
+	},
+	function(error) { console.log(error.message); }
+    );
+}
+
+function getBodyWeight(response, fatData) {
+    var getBodyWeightChoreo = new Fitbit.GetBodyWeight(session); 
+    var getBodyWeightInputs = getBodyWeightChoreo.newInputSet();
+
+    getBodyWeightInputs.setCredential('Fitbit');
+    
+    var today = new Date();
+    var todayFormatted = today.toISOString().slice(0, 10);
+    getBodyWeightInputs.set_Date(todayFormatted + "/1w");
+
+    getBodyWeightChoreo.execute(
+	getBodyWeightInputs,
+	function(results) { 
+	    var weightData = handleBodyData(results, "weight");
+	    var data = {fatData: fatData, weightData: weightData}; 
+	    getBodyWeightGoal(response, data);
+	},
+	function(error) { console.log(error.message); }
+    );
+};
+
+function getBodyWeightGoal(response, data) {
+    var getBodyWeightGoalChoreo = new Fitbit.GetBodyWeightGoal(session); 
+    var getBodyWeightGoalInputs = getBodyWeightGoalChoreo.newInputSet();
+
+    getBodyWeightGoalInputs.setCredential('Fitbit');
+    
+    getBodyWeightGoalChoreo.execute(
+	getBodyWeightGoalInputs,
+	function(results) {
+	    var weightGoal = JSON.stringify([JSON.parse(results.get_Response())["goal"]["weight"]]);
+	    data.weightData.weightGoal = weightGoal;
+	    renderStatusPage(response, data); 
+	},
 	function(error) { console.log(error.message); }
     );
 }
@@ -92,6 +82,59 @@ function getBodyFatGoal(response, data) {
 function renderStatusPage(response, data) {
     response.render("status", data);
 }
+
+function handleBodyData(results, metric) {
+    var data = JSON.parse(results.get_Response())[metric];
+    var entries = data.length;
+    var latest = data[entries - 1][metric];
+    var latestDate = data[entries - 1]["date"];
+
+    var weekHigh = 0;
+    var weekLow;
+    var xSum = 0;
+    var xSquaredSum = 0;
+    var ySum = 0;
+    var xySum = 0;
+    var percents = [];
+    for(var i = 0; i < entries; i++) {
+	var curr = data[i][metric];
+	percents.push(curr);
+	xSum += i;
+	xSquaredSum += i * i;
+	ySum += curr;
+	xySum += curr * i; 
+
+	if(i == 0 || curr < weekLow)
+	    weekLow = curr;
+
+	if(curr > weekHigh)
+	    weekHigh = curr;
+    }
+
+    var xMean = xSum / entries;
+    var xSquaredMean = xSquaredSum / entries;
+    var yMean = ySum / entries;
+    var xyMean = xySum / entries;
+
+    var slope = (xMean * yMean) - xyMean;
+    slope = slope / ((xMean * xMean) - xSquaredMean);
+
+    var yIntercept = yMean - (slope * xMean);
+    var predictedData = (slope * entries) + yIntercept;
+    predictedData = JSON.stringify([predictedData]);
+  
+    var x1 = 0;
+    var y1 = yIntercept;
+    var x2 = entries - 1;
+    var y2 = (slope * x2) + y1;
+  
+    percents = JSON.stringify(percents);
+
+    var data = {percents: percents, latest: latest, weekLow: JSON.stringify([weekLow]), weekHigh: JSON.stringify([weekHigh]), predictedData: predictedData, x1: x1, y1: y1, x2: x2, y2: y2};
+
+    return data;
+}
+
 
 var define_routes = function(dict) {
     var toroute = function(item) {

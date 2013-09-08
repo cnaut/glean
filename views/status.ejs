@@ -9,7 +9,10 @@
     <link rel="stylesheet" href="css/main.css">
   </head>
 
-  <body onload="generateCharts();" weekHigh="<%= weekHigh %>" weekLow="<%= weekLow %>" predictedData="<%= predictedData %>" fatPercents="<%= fatPercents %>" fatGoal="<%= fatGoal %>" x1="<%= x1 %>" y1="<%= y1 %>" x2="<%= x2 %>" y2="<%= y2 %>">
+  <body onload="generateAllCharts();">
+    <div class="data" id="weight-data" weekHigh="<%= weightData.weekHigh %>" weekLow="<%= weightData.weekLow %>" predictedData="<%= weightData.predictedData %>" percents="<%= weightData.percents %>" goal="<%= weightData.weightGoal %>" x1="<%= weightData.x1 %>" y1="<%= weightData.y1 %>" x2="<%= weightData.x2 %>" y2="<%= weightData.y2 %>"/></div>
+    <div class="data" id="fat-data" weekHigh="<%= fatData.weekHigh %>" weekLow="<%= fatData.weekLow %>" predictedData="<%= fatData.predictedData %>" percents="<%= fatData.percents %>" goal="<%= fatData.goal %>" x1="<%= fatData.x1 %>" y1="<%= fatData.y1 %>" x2="<%= fatData.x2 %>" y2="<%= fatData.y2 %>"/></div>
+    
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
@@ -21,41 +24,73 @@
     <div class="container-fluid" id="content">
       <div class="row-fluid">
 	<div class=span12>
-	  <h2>Body Fat</h2>
-	  <h3><%= latestFat %>%</h3>
+	  <h2>Body Weight</h2>
+	  <h3><%= weightData.latest %></h3>
 	  
-	  <span id="highest-chart-container" class="chart-container">
-	    <div id="highest-chart-div" class="chart-div"></div>
+	  <span id="weight-highest-chart-container" class="chart-container">
+	    <div id="weight-highest-chart-div" class="chart-div"></div>
 	    <p>Week High</p>
 	  </span>
 	  
-	  <span id="lowest-chart-container" class="chart-container">
-	    <div id="lowest-chart-div" class="chart-div"></div>
+	  <span id="weight-lowest-chart-container" class="chart-container">
+	    <div id="weight-lowest-chart-div" class="chart-div"></div>
 	    <p>Week Low</p>
 	  </span>
 
-	  
-
-	  
-	  <span id="historical-chart-container" class="chart-container">
-	    <span id="line-graph"></span>
-	    <div id="historical-chart-div" class="chart-div"></div>
+	  <span id="weight-historical-chart-container" class="chart-container">
+	    <span id="weight-line-graph"></span>
+	    <div id="weight-historical-chart-div" class="chart-div"></div>
 	    <p>Past Week</p>
 	  </span>
 	  
-	  <span id="predicted-chart-container" class="chart-container">
-	    <div id="predicted-chart-div" class="chart-div"></div>
+	  <span id="weight-predicted-chart-container" class="chart-container">
+	    <div id="weight-predicted-chart-div" class="chart-div"></div>
 	    <p>Predicted</p>
 	  </span>
 
-	  <span id="goal-chart-container" class="chart-container">
-	    <div id="goal-chart-div" class="chart-div"></div>
+	  <span id="weight-goal-chart-container" class="chart-container">
+	    <div id="weight-goal-chart-div" class="chart-div"></div>
+	    <p>Goal</p>
+	  </span>
+
+	</div>
+      </div>
+
+      <div class="row-fluid">
+	<div class=span12>
+	  <h2>Body Fat</h2>
+	  <h3><%= fatData.latest %>%</h3>
+	  
+	  <span id="fat-highest-chart-container" class="chart-container">
+	    <div id="fat-highest-chart-div" class="chart-div"></div>
+	    <p>Week High</p>
+	  </span>
+	  
+	  <span id="fat-lowest-chart-container" class="chart-container">
+	    <div id="fat-lowest-chart-div" class="chart-div"></div>
+	    <p>Week Low</p>
+	  </span>
+
+	  <span id="fat-historical-chart-container" class="chart-container">
+	    <span id="fat-line-graph"></span>
+	    <div id="fat-historical-chart-div" class="chart-div"></div>
+	    <p>Past Week</p>
+	  </span>
+	  
+	  <span id="fat-predicted-chart-container" class="chart-container">
+	    <div id="fat-predicted-chart-div" class="chart-div"></div>
+	    <p>Predicted</p>
+	  </span>
+
+	  <span id="fat-goal-chart-container" class="chart-container">
+	    <div id="fat-goal-chart-div" class="chart-div"></div>
 	    <p>Goal</p>
 	  </span>
 
 	</div>
       </div>
     </div>
+
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="js/main.js" charset="utf-8"></script>
   </body>

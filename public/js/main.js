@@ -1,23 +1,29 @@
-function generateCharts() {
-    var fatPercents = getData("fatPercents");
-    var weekLow = getData("weekLow");
-    var weekHigh = getData("weekHigh");
+function generateAllCharts() {
+    generateCharts("weight-data", "weight", 2);
+    generateCharts("fat-data", "fat", 10);
+}
 
-    var predictedData = getData("predictedData");
-    var fatGoal = getData("fatGoal");
-    
-    var x1 = getData("x1");
-    var y1 = getData("y1");
-    var x2 = getData("x2");
-    var y2 = getData("y2");
+function generateCharts(dataElement, prefix, scale) {
+    console.log(dataElement + " - " + prefix);
+    var percents = getData(dataElement, "percents");
+    var weekLow = getData(dataElement, "weekLow");
+    var weekHigh = getData(dataElement, "weekHigh");
 
-    generateChart(weekHigh, "#highest-chart-div", "highest-chart");    
-    generateChart(weekLow, "#lowest-chart-div", "lowest-chart");    
-    generateChart(fatPercents, "#historical-chart-div", "historical-chart");    
-    generateChart(predictedData, "#predicted-chart-div", "predicted-chart");    
-    generateChart(fatGoal, "#goal-chart-div", "goal-chart");
+    var predictedData = getData(dataElement, "predictedData");
+    var goal = getData(dataElement, "goal");
     
-    var lineGraph = d3.select("#line-graph")
+    var x1 = getData(dataElement, "x1");
+    var y1 = getData(dataElement, "y1");
+    var x2 = getData(dataElement, "x2");
+    var y2 = getData(dataElement, "y2");
+
+    generateChart(weekHigh, "#" + prefix + "-highest-chart-div", prefix + "-highest-chart", scale);    
+    generateChart(weekLow, "#" + prefix + "-lowest-chart-div", prefix + "-lowest-chart", scale);    
+    generateChart(percents, "#" + prefix + "-historical-chart-div", prefix + "-historical-chart", scale);    
+    generateChart(predictedData, "#" + prefix + "-predicted-chart-div", prefix + "-predicted-chart", scale);    
+    generateChart(goal, "#" + prefix + "-goal-chart-div", prefix + "-goal-chart", scale);
+    
+    var lineGraph = d3.select("#" + prefix + "-line-graph")
 	.append("svg:svg"); 
 
     var line = lineGraph.append("svg:line")
@@ -29,7 +35,7 @@ function generateCharts() {
 	.style("stroke-width", 2);
 }
 
-function generateChart(data, parentName, elementName) {
+function generateChart(data, parentName, elementName, scale) {
     var chart = d3.select(parentName).append("div")
 	.attr("class", "chart")
 	.attr("id", elementName);
@@ -37,11 +43,11 @@ function generateChart(data, parentName, elementName) {
     chart.selectAll("div")
 	.data(data)
     .enter().append("div")
-	.style("height", function(d) { return d * 10 + "px"; })
+	.style("height", function(d) { return d * scale + "px"; })
 	.style("width", "30px")
 	.text(function(d) { return d; });
 }
 
-function getData(name) {
-    return JSON.parse(document.body.getAttribute(name));
+function getData(element, name) {
+    return JSON.parse(document.getElementById(element).getAttribute(name));
 }

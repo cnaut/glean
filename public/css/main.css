@@ -4,6 +4,10 @@ body {
   text-align: center;
 }
 
+.data {
+  display: none;
+}
+
 .chart-div, .chart-container {
   display: inline-block;
 }
@@ -22,30 +26,26 @@ body {
   overflow: hidden;
 }
 
-#historical-chart div {
+#weight-historical-chart div, #fat-historical-chart div {
   background-color: steelblue;
 }
 
-#line-graph {
+#weight-line-graph, #fat-line-graph {
   position: absolute;
 }
 
-#line-graph svg {
-  width: 478px;
-}
-
-#highest-chart div {
+#weight-highest-chart div, #fat-highest-chart div {
   background-color: navy;
 }
 
-#lowest-chart div {
+#weight-lowest-chart div, #fat-lowest-chart div {
   background-color: green;
 }
 
-#predicted-chart div {
+#weight-predicted-chart div, #fat-predicted-chart div {
   background-color: orange;
 }
 
-#goal-chart div {
+#weight-goal-chart div, #fat-goal-chart div {
   background-color: red;
 }
