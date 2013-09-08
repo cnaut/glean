@@ -26,7 +26,9 @@ function getBodyFatData(results, response) {
     var fatEntries = fatData.length;
     var latestFat = fatData[fatEntries - 1]["fat"];
     var latestDate = fatData[fatEntries - 1]["date"];
-	   
+
+    var weekHigh = 0;
+    var weekLow;
     var xSum = 0;
     var xSquaredSum = 0;
     var ySum = 0;
@@ -39,6 +41,12 @@ function getBodyFatData(results, response) {
 	xSquaredSum += i * i;
 	ySum += currFat;
 	xySum += currFat * i; 
+
+	if(i == 0 || currFat < weekLow)
+	    weekLow = currFat;
+
+	if(currFat > weekHigh)
+	    weekHigh = currFat;
     }
 
     var xMean = xSum / fatEntries;
@@ -60,7 +68,7 @@ function getBodyFatData(results, response) {
   
     fatPercents = JSON.stringify(fatPercents);
 
-    var data = {fatPercents: fatPercents, latestFat: latestFat, predictedData: predictedData, x1: x1, y1: y1, x2: x2, y2: y2};
+    var data = {fatPercents: fatPercents, latestFat: latestFat, weekLow: JSON.stringify([weekLow]), weekHigh: JSON.stringify([weekHigh]), predictedData: predictedData, x1: x1, y1: y1, x2: x2, y2: y2};
 	    
     getBodyFatGoal(response, data);
 }

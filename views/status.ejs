@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/main.css">
   </head>
 
-  <body onload="generateChart();" predictedData="<%= predictedData %>" fatPercents="<%= fatPercents %>" fatGoal="<%= fatGoal %>" x1="<%= x1 %>" y1="<%= y1 %>" x2="<%= x2 %>" y2="<%= y2 %>">
+  <body onload="generateChart();" weekHigh="<%= weekHigh %>" weekLow="<%= weekLow %>" predictedData="<%= predictedData %>" fatPercents="<%= fatPercents %>" fatGoal="<%= fatGoal %>" x1="<%= x1 %>" y1="<%= y1 %>" x2="<%= x2 %>" y2="<%= y2 %>">
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
@@ -23,6 +23,19 @@
 	<div class=span12>
 	  <h2>Body Fat</h2>
 	  <h3><%= latestFat %>%</h3>
+	  
+	  <span id="highest-chart-container" class="chart-container">
+	    <div id="highest-chart-div" class="chart-div"></div>
+	    <p>Week High</p>
+	  </span>
+	  
+	  <span id="lowest-chart-container" class="chart-container">
+	    <div id="lowest-chart-div" class="chart-div"></div>
+	    <p>Week Low</p>
+	  </span>
+
+	  
+
 	  
 	  <span id="historical-chart-container" class="chart-container">
 	    <span id="line-graph"></span>

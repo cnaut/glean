@@ -1,5 +1,8 @@
 function generateChart() {
     var fatPercents = JSON.parse(document.body.getAttribute("fatPercents"));
+    var weekLow = JSON.parse(document.body.getAttribute("weekLow"));
+    var weekHigh = JSON.parse(document.body.getAttribute("weekHigh"));
+
     var predictedData = JSON.parse(document.body.getAttribute("predictedData"));
     var fatGoal = JSON.parse(document.body.getAttribute("fatGoal"));
     
@@ -7,6 +10,28 @@ function generateChart() {
     var y1 = JSON.parse(document.body.getAttribute("y1"));
     var x2 = JSON.parse(document.body.getAttribute("x2"));
     var y2 = JSON.parse(document.body.getAttribute("y2"));
+
+    var highChart = d3.select("#highest-chart-div").append("div")
+	.attr("class", "chart")
+	.attr("id", "highest-chart");
+    
+    highChart.selectAll("div")
+	.data(weekHigh)
+    .enter().append("div")
+	.style("height", function(d) { return d * 10 + "px"; })
+	.style("width", "30px")
+	.text(function(d) { return d; });
+
+    var lowChart = d3.select("#lowest-chart-div").append("div")
+	.attr("class", "chart")
+	.attr("id", "lowest-chart");
+    
+    lowChart.selectAll("div")
+	.data(weekLow)
+    .enter().append("div")
+	.style("height", function(d) { return d * 10 + "px"; })
+	.style("width", "30px")
+	.text(function(d) { return d; });
 
     var chart1 = d3.select("#historical-chart-div").append("div")
 	.attr("class", "chart")
