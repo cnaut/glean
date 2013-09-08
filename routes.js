@@ -1,10 +1,23 @@
-var uu = require('underscore');
+var uu	    = require('underscore')
+    , async = require('async');
 
 var tsession = require("temboo/core/temboosession");
 var session = new tsession.TembooSession(process.env.TEMBOO_ACCOUNT_NAME, process.env.TEMBOO_APP_NAME, process.env.TEMBOO_APP_KEY);
 var Fitbit = require("temboo/Library/Fitbit/Body");
 
 var statusfn = function(request, response) {
+    async.parallel({
+	weightData: getBodyWeight,
+	weightGoal: getBodyWeightGoal,
+	fatData: getBodyFat,
+	fatGoal: getBodyFatGoal
+    }, 
+    function(err, results) {
+	response.render("status", results);
+    });
+};
+
+function getBodyFat(callback) {
     var getBodyFatChoreo = new Fitbit.GetBodyFat(session); 
     var getBodyFatInputs = getBodyFatChoreo.newInputSet();
 
@@ -18,13 +31,14 @@ var statusfn = function(request, response) {
 	getBodyFatInputs,
 	function(results) { 
 	    var fatData = handleBodyData(results, "fat"); 
-	    getBodyFatGoal(response, fatData);
+	    callback(null, fatData);
 	},
 	function(error) { console.log(error.message); }
     );
-};
 
-function getBodyFatGoal(response, fatData) {
+}
+
+function getBodyFatGoal(callback) {
     var getBodyFatGoalChoreo = new Fitbit.GetBodyFatGoal(session); 
     var getBodyFatGoalInputs = getBodyFatGoalChoreo.newInputSet();
 
@@ -34,14 +48,13 @@ function getBodyFatGoal(response, fatData) {
 	getBodyFatGoalInputs,
 	function(results) {
 	    var fatGoal = JSON.stringify([JSON.parse(results.get_Response())["goal"]["fat"]]);
-	    fatData.goal = fatGoal;
-	    getBodyWeight(response, fatData); 
+	    callback(null, fatGoal); 
 	},
 	function(error) { console.log(error.message); }
     );
 }
 
-function getBodyWeight(response, fatData) {
+function getBodyWeight(callback) {
     var getBodyWeightChoreo = new Fitbit.GetBodyWeight(session); 
     var getBodyWeightInputs = getBodyWeightChoreo.newInputSet();
 
@@ -55,14 +68,13 @@ function getBodyWeight(response, fatData) {
 	getBodyWeightInputs,
 	function(results) { 
 	    var weightData = handleBodyData(results, "weight");
-	    var data = {fatData: fatData, weightData: weightData}; 
-	    getBodyWeightGoal(response, data);
+	    callback(null, weightData);
 	},
 	function(error) { console.log(error.message); }
     );
 };
 
-function getBodyWeightGoal(response, data) {
+function getBodyWeightGoal(callback) {
     var getBodyWeightGoalChoreo = new Fitbit.GetBodyWeightGoal(session); 
     var getBodyWeightGoalInputs = getBodyWeightGoalChoreo.newInputSet();
 
@@ -72,15 +84,10 @@ function getBodyWeightGoal(response, data) {
 	getBodyWeightGoalInputs,
 	function(results) {
 	    var weightGoal = JSON.stringify([JSON.parse(results.get_Response())["goal"]["weight"]]);
-	    data.weightData.weightGoal = weightGoal;
-	    renderStatusPage(response, data); 
+	    callback(null, weightGoal); 
 	},
 	function(error) { console.log(error.message); }
     );
-}
-
-function renderStatusPage(response, data) {
-    response.render("status", data);
 }
 
 function handleBodyData(results, metric) {

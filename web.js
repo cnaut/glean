@@ -1,5 +1,6 @@
-var express = require('express')
-    , ROUTES = require('./routes');
+var express	= require('express')
+    , async	= require('async')
+    , ROUTES	= require('./routes');
 
 var app = express();
 app.set('views', __dirname + '/views');
