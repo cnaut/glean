@@ -1,5 +1,4 @@
 var express	= require('express')
-    , async	= require('async')
     , ROUTES	= require('./routes');
 
 var app = express();

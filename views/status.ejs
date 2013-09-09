@@ -1,26 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-
-    <title>glean status</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css">
-    <link rel="stylesheet" href="css/main.css">
-  </head>
+<% include header.ejs %>
 
   <body onload="generateAllCharts();">
     <div class="data" id="weight-data" weekHigh="<%= weightData.weekHigh %>" weekLow="<%= weightData.weekLow %>" predictedData="<%= weightData.predictedData %>" percents="<%= weightData.percents %>" goal="<%= weightGoal %>" x1="<%= weightData.x1 %>" y1="<%= weightData.y1 %>" x2="<%= weightData.x2 %>" y2="<%= weightData.y2 %>"/></div>
     <div class="data" id="fat-data" weekHigh="<%= fatData.weekHigh %>" weekLow="<%= fatData.weekLow %>" predictedData="<%= fatData.predictedData %>" percents="<%= fatData.percents %>" goal="<%= fatGoal %>" x1="<%= fatData.x1 %>" y1="<%= fatData.y1 %>" x2="<%= fatData.x2 %>" y2="<%= fatData.y2 %>"/></div>
+   
+    <% include navbar.ejs %>
     
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-	  <a class="brand" href="#">glean</a>
-	</div>
-      </div>
-    </div>
-
     <div class="container-fluid" id="content">
       <div class="row-fluid">
 	<div class=span12>
@@ -94,4 +79,5 @@
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="js/main.js" charset="utf-8"></script>
   </body>
-</html>
+
+<% include footer.ejs %>

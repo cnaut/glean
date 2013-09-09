@@ -17,6 +17,10 @@ var statusfn = function(request, response) {
     });
 };
 
+var foursquarefn = function(request, response) {
+    response.render("foursquare");
+};
+
 function getBodyFat(callback) {
     var getBodyFatChoreo = new Fitbit.GetBodyFat(session); 
     var getBodyFatInputs = getBodyFatChoreo.newInputSet();
@@ -151,7 +155,8 @@ var define_routes = function(dict) {
 };
 
 var ROUTES = define_routes({
-    '/': statusfn
+    '/': statusfn,
+    '/foursquare': foursquarefn
 });
 
 module.exports = ROUTES;
