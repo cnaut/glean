@@ -4,6 +4,7 @@ var uu	    = require('underscore')
 var tsession = require("temboo/core/temboosession");
 var session = new tsession.TembooSession(process.env.TEMBOO_ACCOUNT_NAME, process.env.TEMBOO_APP_NAME, process.env.TEMBOO_APP_KEY);
 var Fitbit = require("temboo/Library/Fitbit/Body");
+var Foursquare = require("temboo/Library/Foursquare/Users");
 
 var statusfn = function(request, response) {
     async.parallel({
@@ -18,7 +19,35 @@ var statusfn = function(request, response) {
 };
 
 var foursquarefn = function(request, response) {
-    response.render("foursquare");
+    var checkinsByUserChoreo = new Foursquare.CheckinsByUser(session);
+    var checkinsByUserInputs = checkinsByUserChoreo.newInputSet();
+    checkinsByUserInputs.setCredential('Foursquare');
+
+    checkinsByUserChoreo.execute(
+	checkinsByUserInputs,
+	function(results) { 
+	    var checkinsData = JSON.parse(results.get_Response());
+	    var items = checkinsData.response.checkins.items;	 
+	    var physicalActivities = [];
+	    var restaurants = [];
+	    for(var i = 0; i < items.length; i++) {
+		var currVenue = items[i].venue;
+		if(currVenue.categories[0].name.indexOf("Restaurant") != -1) {
+		    restaurants.push(currVenue.name);
+		}
+		if(currVenue.categories[0].name.indexOf("Gym") != -1) {
+		    physicalActivities.push(currVenue.name);
+		}
+	    }
+
+	    var data = {};
+	    data.checkinsData = checkinsData;
+	    data.physicalActivities = physicalActivities;
+	    data.restaurants = restaurants;
+	    response.render("foursquare", data);
+	},
+	function(error) { console.log(error.type); }
+    );
 };
 
 function getBodyFat(callback) {

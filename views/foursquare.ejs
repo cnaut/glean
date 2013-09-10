@@ -2,5 +2,21 @@
 
 <% include navbar.ejs %>
 
-hi
+<div>Checkins - <%= checkinsData.response.checkins.count %></div>
+<% for(var i = 0; i < checkinsData.response.checkins.items.length; i++) {%>
+    <div><%= checkinsData.response.checkins.items[i].venue.name %> - <%= checkinsData.response.checkins.items[i].venue.location.address %> - <%= checkinsData.response.checkins.items[i].venue.categories[0].name %></div>
+<% } %>
+
+<h2>Physical Activity</h2>
+<% for(var i = 0; i < physicalActivities.length; i++) {%>
+    <div><%= physicalActivities[i] %></div>
+<% } %>
+
+
+<h2>Restaurants</h2>
+<% for(var i = 0; i < restaurants.length; i++) {%>
+    <div><%= restaurants[i] %></div>
+<% } %>
+
+
 <% include footer.ejs %>
