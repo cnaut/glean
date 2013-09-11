@@ -4,6 +4,7 @@ body {
   text-align: center;
 }
 
+/* Status.ejs */
 .data {
   display: none;
 }
@@ -48,4 +49,24 @@ body {
 
 #weight-goal-chart div, #fat-goal-chart div {
   background-color: red;
+}
+
+#category-div {
+    padding-bottom: 20px;
+}
+
+/* Foursquare.ejs */
+#category-div div {
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 25px;
+}
+
+#category-div div div {
+    display: block;
+}
+
+#checkins-table {
+    margin-left: auto;
+    margin-right: auto;
 }

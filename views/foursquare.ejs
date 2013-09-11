@@ -2,21 +2,30 @@
 
 <% include navbar.ejs %>
 
-<div>Checkins - <%= checkinsData.response.checkins.count %></div>
+<div id="category-div">
+    <div> 
+	<h2>Healthy</h2>
+	<% for(var i = 0; i < physicalActivities.length; i++) {%>
+	    <div><%= physicalActivities[i] %></div>
+	<% } %>
+    </div>
+
+    <div>
+	<h2>Not Healthy</h2>
+	<% for(var i = 0; i < restaurants.length; i++) {%>
+	    <div><%= restaurants[i] %></div>
+	<% } %>
+    </div>
+</div>
+
+<h2>Recent Checkins</h2>
+<table id="checkins-table">
 <% for(var i = 0; i < checkinsData.response.checkins.items.length; i++) {%>
-    <div><%= checkinsData.response.checkins.items[i].venue.name %> - <%= checkinsData.response.checkins.items[i].venue.location.address %> - <%= checkinsData.response.checkins.items[i].venue.categories[0].name %></div>
+    <tr>
+	<td><%= checkinsData.response.checkins.items[i].venue.name %></td>
+	<td><%= checkinsData.response.checkins.items[i].venue.location.address %></td>
+	<td><%= checkinsData.response.checkins.items[i].venue.categories[0].name %></td>
+    </tr>
 <% } %>
-
-<h2>Physical Activity</h2>
-<% for(var i = 0; i < physicalActivities.length; i++) {%>
-    <div><%= physicalActivities[i] %></div>
-<% } %>
-
-
-<h2>Restaurants</h2>
-<% for(var i = 0; i < restaurants.length; i++) {%>
-    <div><%= restaurants[i] %></div>
-<% } %>
-
-
+</table>
 <% include footer.ejs %>
