@@ -28,22 +28,31 @@ var foursquarefn = function(request, response) {
 	function(results) { 
 	    var checkinsData = JSON.parse(results.get_Response());
 	    var items = checkinsData.response.checkins.items;	 
-	    var physicalActivities = [];
-	    var restaurants = [];
+	    var healthy = [];
+	    var healthyPoints = 0;
+	    var unhealthy = [];
+	    var unhealthyPoints = 0;
+	    var netPoints = 0;
 	    for(var i = 0; i < items.length; i++) {
 		var currVenue = items[i].venue;
 		if(currVenue.categories[0].name.indexOf("Restaurant") != -1) {
-		    restaurants.push(currVenue.name);
+		    unhealthy.push(currVenue.name);
+		    unhealthyPoints++;
 		}
 		if(currVenue.categories[0].name.indexOf("Gym") != -1) {
-		    physicalActivities.push(currVenue.name);
+		    healthy.push(currVenue.name);
+		    healthyPoints++;
 		}
 	    }
+	    netPoints = healthyPoints + unhealthyPoints;
 
 	    var data = {};
 	    data.checkinsData = checkinsData;
-	    data.physicalActivities = physicalActivities;
-	    data.restaurants = restaurants;
+	    data.healthy = healthy;
+	    data.healthyPoints = healthyPoints;
+	    data.unhealthy = unhealthy;
+	    data.unhealthyPoints = unhealthyPoints;
+	    data.netPoints = netPoints;
 	    response.render("foursquare", data);
 	},
 	function(error) { console.log(error.type); }

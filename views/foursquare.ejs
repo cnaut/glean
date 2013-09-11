@@ -5,18 +5,31 @@
 <div id="category-div">
     <div> 
 	<h2>Healthy</h2>
-	<% for(var i = 0; i < physicalActivities.length; i++) {%>
-	    <div><%= physicalActivities[i] %></div>
+	<% for(var i = 0; i < healthy.length; i++) {%>
+	    <div><%= healthy[i] %></div>
 	<% } %>
+	<div>Points: <%= healthyPoints %></div>
     </div>
 
     <div>
-	<h2>Not Healthy</h2>
-	<% for(var i = 0; i < restaurants.length; i++) {%>
-	    <div><%= restaurants[i] %></div>
+	<h2>Unhealthy</h2>
+	<% for(var i = 0; i < unhealthy.length; i++) {%>
+	    <div><%= unhealthy[i] %></div>
 	<% } %>
+	<div>Points: <%= unhealthyPoints %></div>
     </div>
 </div>
+
+<h2>Health Points</h2>
+<h3>
+    <% if(netPoints >= 0) { %>
+	+
+    <% } %> 
+    <% if(netPoints < 0) { %>
+	-
+    <% } %> 
+    <%= netPoints %>
+</h3>
 
 <h2>Recent Checkins</h2>
 <table id="checkins-table">
