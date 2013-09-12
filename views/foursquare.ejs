@@ -8,7 +8,7 @@
 	<% for(var i = 0; i < healthy.length; i++) {%>
 	    <div><%= healthy[i] %></div>
 	<% } %>
-	<div>Points: <%= healthyPoints %></div>
+	<div class="positive-points">Points: <%= healthyPoints %></div>
     </div>
 
     <div>
@@ -16,18 +16,14 @@
 	<% for(var i = 0; i < unhealthy.length; i++) {%>
 	    <div><%= unhealthy[i] %></div>
 	<% } %>
-	<div>Points: <%= unhealthyPoints %></div>
+	<div class="negative-points">Points: <%= unhealthyPoints %></div>
     </div>
 </div>
 
 <h2>Health Points</h2>
-<h3>
-    <% if(netPoints >= 0) { %>
-	+
-    <% } %> 
-    <% if(netPoints < 0) { %>
-	-
-    <% } %> 
+<h3 class="<%= pointsClass %>">
+    <% if(netPoints >= 0) { %>+<% } %> 
+    <% if(netPoints < 0) { %>-<% } %> 
     <%= netPoints %>
 </h3>
 

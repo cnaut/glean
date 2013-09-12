@@ -1,5 +1,6 @@
-var uu	    = require('underscore')
-    , async = require('async');
+var uu		= require('underscore'),
+    runkeeper	= require('./runkeeper'),
+    async	= require('async');
 
 var tsession = require("temboo/core/temboosession");
 var session = new tsession.TembooSession(process.env.TEMBOO_ACCOUNT_NAME, process.env.TEMBOO_APP_NAME, process.env.TEMBOO_APP_KEY);
@@ -45,6 +46,7 @@ var foursquarefn = function(request, response) {
 		}
 	    }
 	    netPoints = healthyPoints + unhealthyPoints;
+	    var pointsClass = (netPoints) >= 0 ? "positive-points" : "negative-points"
 
 	    var data = {};
 	    data.checkinsData = checkinsData;
@@ -53,11 +55,16 @@ var foursquarefn = function(request, response) {
 	    data.unhealthy = unhealthy;
 	    data.unhealthyPoints = unhealthyPoints;
 	    data.netPoints = netPoints;
+	    data.pointsClass= pointsClass;
 	    response.render("foursquare", data);
 	},
 	function(error) { console.log(error.type); }
     );
 };
+
+var runkeeperfn = function(request, response) {
+    runkeeper.getRunkeeperData(response);
+}
 
 function getBodyFat(callback) {
     var getBodyFatChoreo = new Fitbit.GetBodyFat(session); 
@@ -194,7 +201,8 @@ var define_routes = function(dict) {
 
 var ROUTES = define_routes({
     '/': statusfn,
-    '/foursquare': foursquarefn
+    '/foursquare': foursquarefn,
+    '/runkeeper': runkeeperfn
 });
 
 module.exports = ROUTES;

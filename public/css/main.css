@@ -70,3 +70,11 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+
+.positive-points {
+    color: green;
+}
+
+.negative-points {
+    color: red;
+}
