@@ -63,7 +63,7 @@ var foursquarefn = function(request, response) {
 };
 
 var runkeeperfn = function(request, response) {
-    runkeeper.getRunkeeperData(response);
+    runkeeper.getRunkeeperData(response, session);
 }
 
 function getBodyFat(callback) {
