@@ -3,5 +3,20 @@
 <% include navbar.ejs %>
 
 <h2>Runkeeper</h2>
+<h3>Runs</h3>
+<table id="runs-table">
+    <tr>
+	<th>Duration</th>
+	<th>Distance</th>
+	<th>Type</th>
+    </tr>
+    <% for(var i = 0; i < items.length; i++) { %>
+    <tr>
+	<td><%= items[i].duration %></td>
+	<td><%= items[i].total_distance %></td>
+	<td><%= items[i].type %></td>
+    </tr>
+    <%}%>
+</table>
 
 <% include footer.ejs %>

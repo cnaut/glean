@@ -55,7 +55,7 @@ body {
     padding-bottom: 20px;
 }
 
-/* Foursquare.ejs */
+/* foursquare.ejs */
 #category-div div {
     display: inline-block;
     vertical-align: top;
@@ -77,4 +77,14 @@ body {
 
 .negative-points {
     color: red;
+}
+
+/* runkeeper.ejs */
+#runs-table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#runs-table td {
+    padding: 6px;
 }

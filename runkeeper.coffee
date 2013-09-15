@@ -5,7 +5,7 @@ getRunkeeperData = (response, session) ->
     retrieveActivitesInputs.setCredential "Runkeeper"
     
     retrieveActivitesChoreo.execute retrieveActivitesInputs,
-    ((results) -> console.log JSON.parse results.get_Response(); response.render "runkeeper"),
+    ((results) -> response.render "runkeeper", JSON.parse results.get_Response()),
     (error) -> console.log error.type; console.log error.message
 
 module.exports =
