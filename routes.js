@@ -1,11 +1,11 @@
 var uu		= require('underscore'),
+    foursquare	= require('./foursquare'),
     runkeeper	= require('./runkeeper'),
     async	= require('async');
 
 var tsession = require("temboo/core/temboosession");
 var session = new tsession.TembooSession(process.env.TEMBOO_ACCOUNT_NAME, process.env.TEMBOO_APP_NAME, process.env.TEMBOO_APP_KEY);
 var Fitbit = require("temboo/Library/Fitbit/Body");
-var Foursquare = require("temboo/Library/Foursquare/Users");
 
 var statusfn = function(request, response) {
     async.parallel({
@@ -20,46 +20,7 @@ var statusfn = function(request, response) {
 };
 
 var foursquarefn = function(request, response) {
-    var checkinsByUserChoreo = new Foursquare.CheckinsByUser(session);
-    var checkinsByUserInputs = checkinsByUserChoreo.newInputSet();
-    checkinsByUserInputs.setCredential('Foursquare');
-
-    checkinsByUserChoreo.execute(
-	checkinsByUserInputs,
-	function(results) { 
-	    var checkinsData = JSON.parse(results.get_Response());
-	    var items = checkinsData.response.checkins.items;	 
-	    var healthy = [];
-	    var healthyPoints = 0;
-	    var unhealthy = [];
-	    var unhealthyPoints = 0;
-	    var netPoints = 0;
-	    for(var i = 0; i < items.length; i++) {
-		var currVenue = items[i].venue;
-		if(currVenue.categories[0].name.indexOf("Restaurant") != -1) {
-		    unhealthy.push(currVenue.name);
-		    unhealthyPoints++;
-		}
-		if(currVenue.categories[0].name.indexOf("Gym") != -1) {
-		    healthy.push(currVenue.name);
-		    healthyPoints++;
-		}
-	    }
-	    netPoints = healthyPoints + unhealthyPoints;
-	    var pointsClass = (netPoints) >= 0 ? "positive-points" : "negative-points"
-
-	    var data = {};
-	    data.checkinsData = checkinsData;
-	    data.healthy = healthy;
-	    data.healthyPoints = healthyPoints;
-	    data.unhealthy = unhealthy;
-	    data.unhealthyPoints = unhealthyPoints;
-	    data.netPoints = netPoints;
-	    data.pointsClass= pointsClass;
-	    response.render("foursquare", data);
-	},
-	function(error) { console.log(error.type); }
-    );
+    foursquare.getFoursquareData(response, session);
 };
 
 var runkeeperfn = function(request, response) {
