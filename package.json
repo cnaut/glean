@@ -11,7 +11,8 @@
     "socket.io": "*",
     "coffee-script": "*",
     "connect-assets": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "temboo": "*"
   },
   "engines": {
     "node": "0.10.12",
