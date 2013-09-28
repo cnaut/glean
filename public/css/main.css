@@ -4,6 +4,11 @@ body {
   text-align: center;
 }
 
+/* home.ejs */
+#home-title {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 /* Status.ejs */
 .data {
   display: none;
