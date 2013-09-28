@@ -10,7 +10,7 @@
     "jade": "*",
     "socket.io": "*",
     "coffee-script": "*",
-    "connect-assets": "*"
+    "connect-assets": "*",
     "underscore": "*"
   },
   "engines": {
