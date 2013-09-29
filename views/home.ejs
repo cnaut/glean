@@ -38,6 +38,19 @@
     </div>
   </div>
   
+  <h2>Recent Checkins</h2>
+  <table id="checkins-table">
+    <% for(var i = 0; i < checkinData.checkinsData.response.checkins.items.length; i++) {%>
+      <tr>
+	<td><%= checkinData.checkinsData.response.checkins.items[i].venue.name %></td>
+	<td><%= checkinData.checkinsData.response.checkins.items[i].venue.location.address %></td>
+        <% if (checkinData.checkinsData.response.checkins.items[i].venue.categories[0]) { %>
+            <td><%= checkinData.checkinsData.response.checkins.items[i].venue.categories[0].name %></td>
+        <% } %>    
+      </tr>
+  <% } %>
+  </table>
+
   <h3>Recent Runs</h3>
   <table id="runs-table">
     <tr>

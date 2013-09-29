@@ -3,13 +3,13 @@ session = null
 
 setSession = (s) -> session = s
 
-getRunkeeperData = (callback, data) -> 
+getRunkeeperData = (callback, renderPage) -> 
     retrieveActivitesChoreo = new RunKeeper.RetrieveActivites session
     retrieveActivitesInputs = retrieveActivitesChoreo.newInputSet()
     retrieveActivitesInputs.setCredential "Runkeeper"
     
     retrieveActivitesChoreo.execute retrieveActivitesInputs,
-    ((results) -> if data then callback.render data, JSON.parse(results.get_Response()) else callback null, JSON.parse(results.get_Response())),
+    ((results) -> if renderPage then callback.render renderPage, JSON.parse(results.get_Response()) else callback null, JSON.parse(results.get_Response())),
     (error) -> console.log error.type; console.log error.message
 
 module.exports =

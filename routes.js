@@ -9,12 +9,14 @@ var session = new tsession.TembooSession(process.env.TEMBOO_ACCOUNT_NAME, proces
 
 fitbit.setSession(session);
 runkeeper.setSession(session);
+foursquare.setSession(session);
 
 var homefn = function(request, response) {
     async.parallel({
 	weightData: fitbit.getBodyWeight,
 	weightGoal: fitbit.getBodyWeightGoal,
-        runData: runkeeper.getRunkeeperData
+        runData: runkeeper.getRunkeeperData,
+        checkinData: foursquare.getFoursquareData
     },
     function(err, results) {
         response.render("home", results);
@@ -34,7 +36,7 @@ var fitbitfn = function(request, response) {
 };
 
 var foursquarefn = function(request, response) {
-    foursquare.getFoursquareData(response, session);
+    foursquare.getFoursquareData(response, "foursquare");
 };
 
 var runkeeperfn = function(request, response) {

@@ -1,4 +1,7 @@
 Foursquare = require "temboo/Library/Foursquare/Users"
+session = null
+
+setSession = (s) -> session = s
 
 healthy = []
 healthyPoints = 0
@@ -6,7 +9,7 @@ unhealthy = []
 unhealthyPoints = 0
 netPoints = 0
 
-getFoursquareData = (response, session) -> 
+getFoursquareData = (callback, renderPage) -> 
     checkinsByUserChoreo = new Foursquare.CheckinsByUser session
     checkinsByUserInputs = checkinsByUserChoreo.newInputSet()
     checkinsByUserInputs.setCredential 'Foursquare'
@@ -31,7 +34,7 @@ getFoursquareData = (response, session) ->
             unhealthyPoints: unhealthyPoints
             netPoints: netPoints
             pointsClass: pointsClass
-        response.render "foursquare", data),
+        if renderPage then callback.render renderPage, data else callback null, data),
     (error) -> console.log error.type
 
 categorizeVenue	= (venue) ->
@@ -40,4 +43,5 @@ categorizeVenue	= (venue) ->
         healthy.push venue.name unless venue.categories[0].name.indexOf("Gym") is -1
 
 module.exports =
+    setSession: setSession
     getFoursquareData: getFoursquareData

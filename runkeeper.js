@@ -10,14 +10,14 @@
     return session = s;
   };
 
-  getRunkeeperData = function(callback, data) {
+  getRunkeeperData = function(callback, renderPage) {
     var retrieveActivitesChoreo, retrieveActivitesInputs;
     retrieveActivitesChoreo = new RunKeeper.RetrieveActivites(session);
     retrieveActivitesInputs = retrieveActivitesChoreo.newInputSet();
     retrieveActivitesInputs.setCredential("Runkeeper");
     return retrieveActivitesChoreo.execute(retrieveActivitesInputs, (function(results) {
-      if (data) {
-        return callback.render(data, JSON.parse(results.get_Response()));
+      if (renderPage) {
+        return callback.render(renderPage, JSON.parse(results.get_Response()));
       } else {
         return callback(null, JSON.parse(results.get_Response()));
       }
