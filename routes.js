@@ -43,7 +43,7 @@ var foursquarefn = function(request, response) {
 };
 
 var runkeeperfn = function(request, response) {
-    runkeeper.getRunkeeperData(response);
+    runkeeper.getRunkeeperData(response, session);
 }
 
 var define_routes = function(dict) {
