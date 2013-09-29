@@ -5,6 +5,9 @@ var uu		= require('underscore'),
     async	= require('async');
 
 var tsession = require("temboo/core/temboosession");
+console.log(process.env.TEMBOO_ACCOUNT_NAME);
+console.log(process.env.TEMBOO_APP_NAME);
+console.log(process.env.TEMBOO_APP_KEY);
 var session = new tsession.TembooSession(process.env.TEMBOO_ACCOUNT_NAME, process.env.TEMBOO_APP_NAME, process.env.TEMBOO_APP_KEY);
 var Fitbit = require("temboo/Library/Fitbit/Body");
 
