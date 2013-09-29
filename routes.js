@@ -6,7 +6,6 @@ var uu		= require('underscore'),
 
 var tsession = require("temboo/core/temboosession");
 var session = new tsession.TembooSession(process.env.TEMBOO_ACCOUNT_NAME, process.env.TEMBOO_APP_NAME, process.env.TEMBOO_APP_KEY);
-var Fitbit = require("temboo/Library/Fitbit/Body");
 
 fitbit.setSession(session);
 runkeeper.setSession(session);
@@ -15,7 +14,7 @@ var homefn = function(request, response) {
     async.parallel({
 	weightData: fitbit.getBodyWeight,
 	weightGoal: fitbit.getBodyWeightGoal,
-        //runData: runkeeper.getActivities
+        runData: runkeeper.getRunkeeperData
     },
     function(err, results) {
         response.render("home", results);
@@ -39,7 +38,7 @@ var foursquarefn = function(request, response) {
 };
 
 var runkeeperfn = function(request, response) {
-    runkeeper.getRunkeeperData(response, session);
+    runkeeper.getRunkeeperData(response, "runkeeper");
 }
 
 var define_routes = function(dict) {
