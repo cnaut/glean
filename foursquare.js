@@ -47,11 +47,13 @@
   };
 
   categorizeVenue = function(venue) {
-    if (venue.categories[0].name.indexOf("Restaurant") !== -1) {
-      unhealthy.push(venue.name);
-    }
-    if (venue.categories[0].name.indexOf("Gym") !== -1) {
-      return healthy.push(venue.name);
+    if (venue.categories[0]) {
+      if (venue.categories[0].name.indexOf("Restaurant") !== -1) {
+        unhealthy.push(venue.name);
+      }
+      if (venue.categories[0].name.indexOf("Gym") !== -1) {
+        return healthy.push(venue.name);
+      }
     }
   };
 

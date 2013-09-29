@@ -35,8 +35,9 @@ getFoursquareData = (response, session) ->
     (error) -> console.log error.type
 
 categorizeVenue	= (venue) ->
-    unhealthy.push venue.name unless venue.categories[0].name.indexOf("Restaurant") is -1
-    healthy.push venue.name unless venue.categories[0].name.indexOf("Gym") is -1
+    if venue.categories[0]
+        unhealthy.push venue.name unless venue.categories[0].name.indexOf("Restaurant") is -1
+        healthy.push venue.name unless venue.categories[0].name.indexOf("Gym") is -1
 
 module.exports =
     getFoursquareData: getFoursquareData
