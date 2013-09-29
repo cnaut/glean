@@ -1,8 +1,44 @@
-
 <% include header.ejs %>
 
-<% include navbar.ejs %>
+  <div class="data" id="weight-data" weekHigh="<%= weightData.weekHigh %>" weekLow="<%= weightData.weekLow %>" predictedData="<%= weightData.predictedData %>" percents="<%= weightData.percents %>" goal="<%= weightGoal %>" x1="<%= weightData.x1 %>" y1="<%= weightData.y1 %>" x2="<%= weightData.x2 %>" y2="<%= weightData.y2 %>"/></div> 
+  
+  <% include navbar.ejs %>
+  <div class="container-fluid" id="content">
+    <div class="row-fluid">
+      <div class=span12>
+        <h2>Body Weight</h2>
+        <h3><%= weightData.latest %></h3>
+      
+        <span id="weight-highest-chart-container" class="chart-container">
+          <div id="weight-highest-chart-div" class="chart-div"></div>
+          <p>Week High</p>
+        </span>
+      
+        <span id="weight-lowest-chart-container" class="chart-container">
+          <div id="weight-lowest-chart-div" class="chart-div"></div>
+          <p>Week Low</p>
+        </span>
 
-<h2 id="home-title">glean home</h2>
+        <span id="weight-historical-chart-container" class="chart-container">
+          <span id="weight-line-graph"></span>
+          <div id="weight-historical-chart-div" class="chart-div"></div>
+          <p>Past Week</p>
+        </span>
+      
+        <span id="weight-predicted-chart-container" class="chart-container">
+          <div id="weight-predicted-chart-div" class="chart-div"></div>
+          <p>Predicted</p>
+        </span>
+      
+        <span id="weight-goal-chart-container" class="chart-container">
+          <div id="weight-goal-chart-div" class="chart-div"></div>
+          <p>Goal</p>
+        </span>
+      </div>
+    </div>
+  </div>
 
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="js/main.js" charset="utf-8"></script>
+  <script>onload=generateCharts("weight-data", "weight", 2);</script>
 <% include footer.ejs %>

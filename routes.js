@@ -5,9 +5,6 @@ var uu		= require('underscore'),
     async	= require('async');
 
 var tsession = require("temboo/core/temboosession");
-console.log(process.env.TEMBOO_ACCOUNT_NAME);
-console.log(process.env.TEMBOO_APP_NAME);
-console.log(process.env.TEMBOO_APP_KEY);
 var session = new tsession.TembooSession(process.env.TEMBOO_ACCOUNT_NAME, process.env.TEMBOO_APP_NAME, process.env.TEMBOO_APP_KEY);
 var Fitbit = require("temboo/Library/Fitbit/Body");
 
@@ -15,18 +12,14 @@ fitbit.setSession(session);
 runkeeper.setSession(session);
 
 var homefn = function(request, response) {
-    var results = []
-    response.render("home", results);
-    /**
     async.parallel({
 	weightData: fitbit.getBodyWeight,
 	weightGoal: fitbit.getBodyWeightGoal,
-        runData: runkeeper.getActivities
+        //runData: runkeeper.getActivities
     },
     function(err, results) {
         response.render("home", results);
     });
-    **/
 }
 
 var fitbitfn = function(request, response) {
