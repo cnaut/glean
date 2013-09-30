@@ -7,6 +7,7 @@ healthy = []
 healthyPoints = 0
 unhealthy = []
 unhealthyPoints = 0
+neutral = []
 netPoints = 0
 
 getFoursquareData = (callback, renderPage) -> 
@@ -32,6 +33,7 @@ getFoursquareData = (callback, renderPage) ->
             healthyPoints: healthyPoints
             unhealthy: unhealthy
             unhealthyPoints: unhealthyPoints
+            neutral: neutral
             netPoints: netPoints
             pointsClass: pointsClass
         if renderPage then callback.render renderPage, data else callback null, data),
@@ -41,6 +43,7 @@ categorizeVenue	= (venue) ->
     if venue.categories[0]
         unhealthy.push venue.name unless venue.categories[0].name.indexOf("Restaurant") is -1
         healthy.push venue.name unless venue.categories[0].name.indexOf("Gym") is -1
+        neutral.push venue.name unless (venue.categories[0].name.indexOf("Restaurant") != -1 or venue.categories[0].name.indexOf("Gym") != -1)
 
 module.exports =
     setSession: setSession
