@@ -16,7 +16,8 @@ getBodyWeight = (callback) ->
     getBodyWeightChoreo.execute(
         getBodyWeightInputs,
         ((results) ->
-            weightData = handleBodyData results, "weight"
+            
+            weightData = handleBodyData results, "weight", kilosToPounds
             callback null, weightData),
         (error) -> console.log error.message
     )
@@ -30,7 +31,7 @@ getBodyWeightGoal= (callback) ->
     getBodyWeightGoalChoreo.execute(
         getBodyWeightGoalInputs,
         ((results) ->
-            weightGoal = JSON.stringify [JSON.parse(results.get_Response())["goal"]["weight"]]
+            weightGoal = JSON.stringify [kilosToPounds JSON.parse(results.get_Response())["goal"]["weight"]]
             callback null, weightGoal
         ),
         (error) -> console.log error.message
@@ -67,7 +68,7 @@ getBodyFatGoal = (callback) ->
         (error) -> console.log error.message
     )
     
-handleBodyData = (results, metric) ->
+handleBodyData = (results, metric, transform) ->
     data = JSON.parse(results.get_Response())[metric]
     entries = data.length
     latest = data[entries - 1][metric]
@@ -83,7 +84,7 @@ handleBodyData = (results, metric) ->
 
     i = 0
     while i < entries
-        curr = data[i][metric]
+        curr = if transform then transform data[i][metric] else data[i][metric]
         percents.push curr
         xSum += i
         xSquaredSum += i * i
@@ -106,7 +107,7 @@ handleBodyData = (results, metric) ->
 
     yIntercept = yMean - (slope * xMean)
     predictedData = (slope * entries) + yIntercept
-    predictedData = JSON.stringify [predictedData]
+    predictedData = JSON.stringify [roundToNearestTwo predictedData]
   
     x1 = 0
     y1 = yIntercept
@@ -125,6 +126,12 @@ handleBodyData = (results, metric) ->
         y1: y1
         x2: x2
         y2: y2
+
+kilosToPounds = (kilos) ->
+    roundToNearestTwo kilos * 2.2
+
+roundToNearestTwo = (num) ->
+    Math.round(num *100) / 100
 
 module.exports =
     setSession: setSession

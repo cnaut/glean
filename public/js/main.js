@@ -1,5 +1,5 @@
 function generateAllCharts() {
-    generateCharts("weight-data", "weight", 2);
+    generateCharts("weight-data", "weight", 1);
     generateCharts("fat-data", "fat", 10);
 }
 
@@ -44,7 +44,7 @@ function generateChart(data, parentName, elementName, scale) {
 	.data(data)
     .enter().append("div")
 	.style("height", function(d) { return d * scale + "px"; })
-	.style("width", "30px")
+	.style("width", "35px")
 	.text(function(d) { return d; });
 }
 
