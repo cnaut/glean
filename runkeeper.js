@@ -16,10 +16,21 @@
     retrieveActivitesInputs = retrieveActivitesChoreo.newInputSet();
     retrieveActivitesInputs.setCredential("Runkeeper");
     return retrieveActivitesChoreo.execute(retrieveActivitesInputs, (function(results) {
+      var activities, activity, _i, _len;
+      activities = JSON.parse(results.get_Response()).items;
+      for (_i = 0, _len = activities.length; _i < _len; _i++) {
+        activity = activities[_i];
+        activity.total_distance = activity.total_distance * .000621;
+        activity.duration = activity.duration / 60;
+      }
       if (renderPage) {
-        return callback.render(renderPage, JSON.parse(results.get_Response()));
+        return callback.render(renderPage, {
+          activities: activities
+        });
       } else {
-        return callback(null, JSON.parse(results.get_Response()));
+        return callback(null, {
+          activities: activities
+        });
       }
     }), function(error) {
       console.log(error.type);
