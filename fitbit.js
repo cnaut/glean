@@ -76,7 +76,7 @@
     var curr, data, entries, i, latest, latestDate, percents, predictedData, slope, weekHigh, weekLow, x1, x2, xMean, xSquaredMean, xSquaredSum, xSum, xyMean, xySum, y1, y2, yIntercept, yMean, ySum;
     data = JSON.parse(results.get_Response())[metric];
     entries = data.length;
-    latest = data[entries - 1][metric];
+    latest = transform(data[entries - 1][metric]);
     latestDate = data[entries - 1]["date"];
     weekHigh = 0;
     weekLow = null;

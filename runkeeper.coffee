@@ -19,7 +19,7 @@ getRunkeeperData = (callback, renderPage) ->
         activities = JSON.parse(results.get_Response()).items
         for activity in activities
             activity.total_distance = activity.total_distance * .000621
-            activity.duration = activity.duration / 6
+            activity.duration = activity.duration / 60
 
             activityTime = new Date activity.start_time
             #Activity date is within 7 days of today in miliseconds

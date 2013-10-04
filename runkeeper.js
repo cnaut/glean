@@ -27,7 +27,7 @@
       for (_i = 0, _len = activities.length; _i < _len; _i++) {
         activity = activities[_i];
         activity.total_distance = activity.total_distance * .000621;
-        activity.duration = activity.duration / 6;
+        activity.duration = activity.duration / 60;
         activityTime = new Date(activity.start_time);
         if (today.getTime() - activityTime.getTime() < 7 * 86400000) {
           thisWeek.runs++;
