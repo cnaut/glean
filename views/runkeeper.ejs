@@ -3,6 +3,12 @@
 <% include navbar.ejs %>
 
 <h2>Runkeeper</h2>
+
+<h3>This Week</h3>
+<p>Runs: <%= thisWeek.runs %></p>
+<p>Miles: <%= thisWeek.miles %> miles</p>
+<p>Total Time: <%= thisWeek.minutes %> minutes</p>
+
 <% include runkeeper/recentruns.ejs %>
 
 <% include footer.ejs %>

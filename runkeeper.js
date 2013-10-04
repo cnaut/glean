@@ -16,18 +16,36 @@
     retrieveActivitesInputs = retrieveActivitesChoreo.newInputSet();
     retrieveActivitesInputs.setCredential("Runkeeper");
     return retrieveActivitesChoreo.execute(retrieveActivitesInputs, (function(results) {
-      var activities, activity, date_regex, _i, _len;
+      var activities, activity, activityTime, date_regex, thisWeek, today, _i, _len;
+      today = new Date();
+      thisWeek = {
+        runs: 0,
+        miles: 0,
+        minutes: 0
+      };
       activities = JSON.parse(results.get_Response()).items;
       for (_i = 0, _len = activities.length; _i < _len; _i++) {
         activity = activities[_i];
-        activity.total_distance = (activity.total_distance * .000621).toFixed(2);
-        activity.duration = (activity.duration / 60).toFixed(2);
+        activity.total_distance = activity.total_distance * .000621;
+        activity.duration = activity.duration / 6;
+        activityTime = new Date(activity.start_time);
+        if (today.getTime() - activityTime.getTime() < 7 * 86400000) {
+          thisWeek.runs++;
+          thisWeek.miles += activity.total_distance;
+          thisWeek.minutes += activity.duration;
+        }
+        activity.total_distance = activity.total_distance.toFixed(2);
+        activity.duration = activity.duration.toFixed(2);
+        activity.minutes_per_mile = (activity.duration / activity.total_distance).toFixed(2);
         date_regex = /(.*)\d\d:\d\d:\d\d/;
         activity.date = date_regex.exec(activity.start_time)[1];
       }
+      thisWeek.miles = thisWeek.miles.toFixed(2);
+      thisWeek.minutes = thisWeek.minutes.toFixed(2);
       if (renderPage) {
         return callback.render(renderPage, {
-          activities: activities
+          activities: activities,
+          thisWeek: thisWeek
         });
       } else {
         return callback(null, {
