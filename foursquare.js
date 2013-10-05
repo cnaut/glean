@@ -37,7 +37,7 @@
       }
       healthyPoints = healthy.length;
       unhealthyPoints = unhealthy.length;
-      netPoints = healthyPoints + unhealthyPoints;
+      netPoints = healthyPoints - unhealthyPoints;
       pointsClass = (netPoints >= 0 ? "positive-points" : "negative-points");
       data = {
         checkinsData: checkinsData,
@@ -64,10 +64,10 @@
       if (venue.categories[0].name.indexOf("Restaurant") !== -1) {
         unhealthy.push(venue.name);
       }
-      if (venue.categories[0].name.indexOf("Gym") !== -1) {
+      if (!(venue.categories[0].name.indexOf("Gym") === -1 && venue.categories[0].name.indexOf("Field") === -1)) {
         healthy.push(venue.name);
       }
-      if (!(venue.categories[0].name.indexOf("Restaurant") !== -1 || venue.categories[0].name.indexOf("Gym") !== -1)) {
+      if (!(venue.categories[0].name.indexOf("Restaurant") !== -1 || venue.categories[0].name.indexOf("Gym") !== -1 || venue.categories[0].name.indexOf("Field") !== -1)) {
         return neutral.push(venue.name);
       }
     }
