@@ -112,7 +112,7 @@ handleBodyData = (results, metric, transform) ->
     predictedData = getProjectedData entries
     predictedData = JSON.stringify [roundToNearestTwo predictedData]
     predictedWeek = []
-    for currX in [0..6]
+    for currX in [entries..entries + 6]
         predictedWeek.push getProjectedData currX
 
     x1 = 0
@@ -120,10 +120,9 @@ handleBodyData = (results, metric, transform) ->
     x2 = entries - 1
     y2 = (slope * x2) + y1
   
-    percents = JSON.stringify percents
 
     data =
-        percents: percents
+        percents: JSON.stringify percents
         latest: latest
         weekLow: JSON.stringify [weekLow]
         weekHigh: JSON.stringify [weekHigh]
