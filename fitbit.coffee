@@ -106,9 +106,15 @@ handleBodyData = (results, metric, transform) ->
     slope = slope / ((xMean * xMean) - xSquaredMean)
 
     yIntercept = yMean - (slope * xMean)
-    predictedData = (slope * entries) + yIntercept
+    getProjectedData = (x) ->
+        roundToNearestTwo((slope * x) + yIntercept)
+
+    predictedData = getProjectedData entries
     predictedData = JSON.stringify [roundToNearestTwo predictedData]
-  
+    predictedWeek = []
+    for currX in [0..6]
+        predictedWeek.push getProjectedData currX
+
     x1 = 0
     y1 = yIntercept
     x2 = entries - 1
@@ -122,6 +128,7 @@ handleBodyData = (results, metric, transform) ->
         weekLow: JSON.stringify [weekLow]
         weekHigh: JSON.stringify [weekHigh]
         predictedData: predictedData
+        predictedWeek: JSON.stringify predictedWeek
         x1: x1
         y1: y1
         x2: x2

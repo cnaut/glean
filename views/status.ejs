@@ -1,7 +1,7 @@
 <% include header.ejs %>
 
-    <div class="data" id="weight-data" weekHigh="<%= weightData.weekHigh %>" weekLow="<%= weightData.weekLow %>" predictedData="<%= weightData.predictedData %>" percents="<%= weightData.percents %>" goal="<%= weightGoal %>" x1="<%= weightData.x1 %>" y1="<%= weightData.y1 %>" x2="<%= weightData.x2 %>" y2="<%= weightData.y2 %>"/></div>
-    <div class="data" id="fat-data" weekHigh="<%= fatData.weekHigh %>" weekLow="<%= fatData.weekLow %>" predictedData="<%= fatData.predictedData %>" percents="<%= fatData.percents %>" goal="<%= fatGoal %>" x1="<%= fatData.x1 %>" y1="<%= fatData.y1 %>" x2="<%= fatData.x2 %>" y2="<%= fatData.y2 %>"/></div>
+<div class="data" id="weight-data" weekHigh="<%= weightData.weekHigh %>" weekLow="<%= weightData.weekLow %>" predictedData="<%= weightData.predictedData %>" percents="<%= weightData.percents %>" predictedWeek="<%= weightData.predictedWeek %>" goal="<%= weightGoal %>" x1="<%= weightData.x1 %>" y1="<%= weightData.y1 %>" x2="<%= weightData.x2 %>" y2="<%= weightData.y2 %>"/></div>
+<div class="data" id="fat-data" weekHigh="<%= fatData.weekHigh %>" weekLow="<%= fatData.weekLow %>" predictedData="<%= fatData.predictedData %>" percents="<%= fatData.percents %>" predictedWeek="<%= fatData.predictedWeek %>" goal="<%= fatGoal %>" x1="<%= fatData.x1 %>" y1="<%= fatData.y1 %>" x2="<%= fatData.x2 %>" y2="<%= fatData.y2 %>"/></div>
    
     <% include navbar.ejs %>
     
@@ -36,8 +36,14 @@
 	    <div id="weight-goal-chart-div" class="chart-div"></div>
 	    <p>Goal</p>
 	  </span>
+        </div>
 
-	</div>
+	<div class=span12>
+	  <span id="weight-predictedweek-chart-container" class="chart-container">
+	    <div id="weight-predictedweek-chart-div" class="chart-div"></div>
+            <p>Predicted Week</p>
+          </span>
+        </div>
       </div>
 
       <div class="row-fluid">
@@ -72,6 +78,12 @@
 	  </span>
 
 	</div>
+	<div class=span12>
+	  <span id="fat-predictedweek-chart-container" class="chart-container">
+	    <div id="fat-predictedweek-chart-div" class="chart-div"></div>
+            <p>Predicted Week</p>
+          </span>
+        </div>
       </div>
     </div>
 

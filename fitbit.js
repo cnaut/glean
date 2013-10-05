@@ -73,7 +73,7 @@
   };
 
   handleBodyData = function(results, metric, transform) {
-    var curr, data, entries, i, latest, latestDate, percents, predictedData, slope, weekHigh, weekLow, x1, x2, xMean, xSquaredMean, xSquaredSum, xSum, xyMean, xySum, y1, y2, yIntercept, yMean, ySum;
+    var curr, currX, data, entries, getProjectedData, i, latest, latestDate, percents, predictedData, predictedWeek, slope, weekHigh, weekLow, x1, x2, xMean, xSquaredMean, xSquaredSum, xSum, xyMean, xySum, y1, y2, yIntercept, yMean, ySum, _i;
     data = JSON.parse(results.get_Response())[metric];
     entries = data.length;
     latest = transform ? transform(data[entries - 1][metric]) : data[entries - 1][metric];
@@ -108,8 +108,15 @@
     slope = (xMean * yMean) - xyMean;
     slope = slope / ((xMean * xMean) - xSquaredMean);
     yIntercept = yMean - (slope * xMean);
-    predictedData = (slope * entries) + yIntercept;
+    getProjectedData = function(x) {
+      return roundToNearestTwo((slope * x) + yIntercept);
+    };
+    predictedData = getProjectedData(entries);
     predictedData = JSON.stringify([roundToNearestTwo(predictedData)]);
+    predictedWeek = [];
+    for (currX = _i = 0; _i <= 6; currX = ++_i) {
+      predictedWeek.push(getProjectedData(currX));
+    }
     x1 = 0;
     y1 = yIntercept;
     x2 = entries - 1;
@@ -121,6 +128,7 @@
       weekLow: JSON.stringify([weekLow]),
       weekHigh: JSON.stringify([weekHigh]),
       predictedData: predictedData,
+      predictedWeek: JSON.stringify(predictedWeek),
       x1: x1,
       y1: y1,
       x2: x2,

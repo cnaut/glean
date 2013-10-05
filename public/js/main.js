@@ -10,6 +10,7 @@ function generateCharts(dataElement, prefix, scale) {
     var weekHigh = getData(dataElement, "weekHigh");
 
     var predictedData = getData(dataElement, "predictedData");
+    var predictedWeek = getData(dataElement, "predictedWeek");
     var goal = getData(dataElement, "goal");
     
     var x1 = getData(dataElement, "x1");
@@ -22,7 +23,8 @@ function generateCharts(dataElement, prefix, scale) {
     generateChart(percents, "#" + prefix + "-historical-chart-div", prefix + "-historical-chart", scale);    
     generateChart(predictedData, "#" + prefix + "-predicted-chart-div", prefix + "-predicted-chart", scale);    
     generateChart(goal, "#" + prefix + "-goal-chart-div", prefix + "-goal-chart", scale);
-    
+    generateChart(predictedWeek, "#" + prefix + "-predictedweek-chart-div", prefix + "-predictedweek-chart", scale);
+
     var lineGraph = d3.select("#" + prefix + "-line-graph")
 	.append("svg:svg"); 
 
