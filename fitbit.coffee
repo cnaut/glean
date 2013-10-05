@@ -71,7 +71,7 @@ getBodyFatGoal = (callback) ->
 handleBodyData = (results, metric, transform) ->
     data = JSON.parse(results.get_Response())[metric]
     entries = data.length
-    latest = transform data[entries - 1][metric]
+    latest = if transform then transform data[entries - 1][metric] else data[entries - 1][metric]
     latestDate = data[entries - 1]["date"]
 
     weekHigh = 0
