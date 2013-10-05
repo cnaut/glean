@@ -2,37 +2,7 @@
 
 <% include navbar.ejs %>
 
-<div id="category-div">
-    <div> 
-	<h2>Healthy</h2>
-	<% for(var i = 0; i < healthy.length; i++) {%>
-	    <div><%= healthy[i] %></div>
-	<% } %>
-	<div class="positive-points">Points: <%= healthyPoints %></div>
-    </div>
-
-    <div>
-	<h2>Neutral</h2>
-	<% for(var i = 0; i < neutral.length; i++) {%>
-	    <div><%= neutral[i] %></div>
-	<% } %>
-    </div>
-
-    <div>
-	<h2>Unhealthy</h2>
-	<% for(var i = 0; i < unhealthy.length; i++) {%>
-	    <div><%= unhealthy[i] %></div>
-	<% } %>
-	<div class="negative-points">Points: <%= unhealthyPoints %></div>
-    </div>
-</div>
-
-<h2>Health Points</h2>
-<h3 class="<%= pointsClass %>">
-    <% if(netPoints >= 0) { %>+<% } %> 
-    <% if(netPoints < 0) { %>-<% } %> 
-    <%= netPoints %>
-</h3>
+<% include foursquare/checkinsurplus.ejs %>
 
 <h2>Recent Checkins</h2>
 <table id="checkins-table">

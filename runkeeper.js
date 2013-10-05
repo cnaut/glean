@@ -77,7 +77,10 @@
         });
       } else {
         return callback(null, {
-          activities: activities
+          activities: activities,
+          thisWeek: thisWeek,
+          lastWeek: lastWeek,
+          weekDiff: weekDiff
         });
       }
     }), function(error) {

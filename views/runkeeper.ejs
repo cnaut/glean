@@ -3,20 +3,7 @@
 <% include navbar.ejs %>
 
 <h2>Runkeeper</h2>
-
-<h3>This Week</h3>
-<p>Runs: <%= thisWeek.runs %> <span class="<%= weekDiff.runsClass %>">(<%= weekDiff.runs %>)</span></p>
-<p>Miles: <%= thisWeek.miles %> miles <span class="<%= weekDiff.milesClass %>">(<%= weekDiff.miles %>)</span></p>
-<p>Total Time: <%= thisWeek.minutes %> minutes <span class="<%= weekDiff.minutesClass %>">(<%= weekDiff.minutes %>)</span></p>
-<p>Minutes per Mile: <%= thisWeek.minutesPerMile %> minutes/mile <span class="<%= weekDiff.minutesPerMileClass %>">(<%= weekDiff.minutesPerMile %>)</span></p>
-
-<h3>Last Week</h3>
-<p>Runs: <%= lastWeek.runs %></p>
-<p>Miles: <%= lastWeek.miles %> miles</p>
-<p>Total Time: <%= lastWeek.minutes %> minutes</p>
-<p>Minutes per Mile: <%= lastWeek.minutesPerMile %> minutes/mile</p>
-
-
+<% include runkeeper/weeklystats.ejs %>
 <% include runkeeper/recentruns.ejs %>
 
 <% include footer.ejs %>

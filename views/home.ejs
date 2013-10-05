@@ -37,21 +37,13 @@
       </div>
     </div>
   </div>
-  
-  <h2>Recent Checkins</h2>
-  <table id="checkins-table">
-    <% for(var i = 0; i < checkinData.checkinsData.response.checkins.items.length; i++) {%>
-      <tr>
-	<td><%= checkinData.checkinsData.response.checkins.items[i].venue.name %></td>
-	<td><%= checkinData.checkinsData.response.checkins.items[i].venue.location.address %></td>
-        <% if (checkinData.checkinsData.response.checkins.items[i].venue.categories[0]) { %>
-            <td><%= checkinData.checkinsData.response.checkins.items[i].venue.categories[0].name %></td>
-        <% } %>    
-      </tr>
-  <% } %>
-  </table>
-  
-  <% var activities = runData.activities %>
+
+  <% var healthy = checkinData.healthy; var healthyPoints = checkinData.healthyPoints; var unhealthy = checkinData.unhealthy; var unhealthyPoints = checkinData.unhealthyPoints; var neutral = checkinData.neutral; var netPoints = checkinData.netPoints; var pointsClass = checkinData.pointsClass %>
+  <% include foursquare/checkinsurplus.ejs %>
+
+  <h2>Run Stats</h2>
+  <% var activities = runData.activities; var thisWeek = runData.thisWeek; var lastWeek = runData.lastWeek; var weekDiff = runData.weekDiff %>
+  <% include runkeeper/weeklystats.ejs %>
   <% include runkeeper/recentruns.ejs %>
 
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>

@@ -1,0 +1,23 @@
+<table class="runs-table">
+  <tr>
+    <th>Week</th>
+    <th>Runs</th>
+    <th>Mile</th>
+    <th>Total Time</th>
+    <th>Miles per Minutes</th>
+  </tr>
+  <tr>
+    <td>This Week</td>
+    <td><%= thisWeek.runs %><span class="<%= weekDiff.runsClass %>"> (<%= weekDiff.runs %>)</span></td>
+    <td><%= thisWeek.miles %><span class="<%= weekDiff.milesClass %>"> (<%= weekDiff.miles %>)</span></td>
+    <td><%= thisWeek.minutes %><span class="<%= weekDiff.minutesClass %>"> (<%= weekDiff.minutes %>)</span></td>
+    <td><%= thisWeek.minutesPerMile %><span class="<%= weekDiff.minutesPerMileClass %>"> (<%= weekDiff.minutesPerMile %>)</span></td>
+  </tr>
+  <tr>
+    <td>Last Week</td>
+    <td><%= lastWeek.runs %></td>
+    <td><%= lastWeek.miles %></td>
+    <td><%= lastWeek.minutes %></td>
+    <td><%= lastWeek.minutesPerMile %></td>
+  </tr>
+</table>

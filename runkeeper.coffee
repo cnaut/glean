@@ -69,7 +69,7 @@ getRunkeeperData = (callback, renderPage) ->
         weekDiff.minutesClass = (if weekDiff.minutes >= 0 then "positive-points" else "negative-points")
         weekDiff.minutesPerMileClass = (if weekDiff.minutesPerMile >= 0 then "negative-points" else "positive-points")
 
-        if renderPage then callback.render renderPage, {activities: activities, thisWeek: thisWeek, lastWeek: lastWeek, weekDiff: weekDiff} else callback null, {activities: activities}),
+        if renderPage then callback.render renderPage, {activities: activities, thisWeek: thisWeek, lastWeek: lastWeek, weekDiff: weekDiff} else callback null, {activities: activities, thisWeek: thisWeek, lastWeek: lastWeek, weekDiff: weekDiff}),
     (error) -> console.log error.type; console.log error.message
 
 module.exports =

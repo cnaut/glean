@@ -1,0 +1,30 @@
+<h2>Healthy Checkin Surplus</h2>
+<h3 class="<%= pointsClass %>">
+    <% if(netPoints >= 0) { %>+<% } %> 
+    <% if(netPoints < 0) { %>-<% } %> 
+    <%= netPoints %>
+</h3>
+<div id="category-div">
+    <div> 
+	<h3>Healthy</h3>
+	<% for(var i = 0; i < healthy.length; i++) {%>
+	    <div><%= healthy[i] %></div>
+	<% } %>
+	<div class="positive-points">Points: <%= healthyPoints %></div>
+    </div>
+
+    <div>
+	<h3>Neutral</h3>
+	<% for(var i = 0; i < neutral.length; i++) {%>
+	    <div><%= neutral[i] %></div>
+	<% } %>
+    </div>
+
+    <div>
+	<h3>Unhealthy</h3>
+	<% for(var i = 0; i < unhealthy.length; i++) {%>
+	    <div><%= unhealthy[i] %></div>
+	<% } %>
+	<div class="negative-points">Points: <%= unhealthyPoints %></div>
+    </div>
+</div>
