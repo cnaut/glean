@@ -3,6 +3,9 @@ session = null
 
 setSession = (s) -> session = s
 
+healthyCategories = ["Gym", "Field"]
+unhealthyCategories = ["Restaurants", "Sports Bar"]
+
 getFoursquareData = (callback, renderPage) -> 
     healthy = []
     healthyPoints = 0
@@ -17,11 +20,27 @@ getFoursquareData = (callback, renderPage) ->
 
     checkinsByUserChoreo.execute checkinsByUserInputs,
     ((results) ->
+        checkIfHealthy = (category) ->
+            for healthyCategory in healthyCategories
+                if category.name.indexOf(healthyCategory) != -1
+                    return true
+            return false
+
+        checkIfUnhealthy = (category) ->
+            for unhealthyCategory in unhealthyCategories
+                if category.name.indexOf(unhealthyCategory) != -1
+                    return true
+            return false
+
+
         categorizeVenue	= (venue) ->
             if venue.categories[0]
-                unhealthy.push venue.name unless venue.categories[0].name.indexOf("Restaurant") is -1
-                healthy.push venue.name unless (venue.categories[0].name.indexOf("Gym") is -1 and venue.categories[0].name.indexOf("Field") is -1)
-                neutral.push venue.name unless (venue.categories[0].name.indexOf("Restaurant") != -1 or venue.categories[0].name.indexOf("Gym") != -1 or venue.categories[0].name.indexOf("Field") != -1)
+                isHealthy = checkIfHealthy venue.categories[0]
+                isUnhealthy = checkIfUnhealthy venue.categories[0]
+
+                healthy.push venue.name unless not isHealthy
+                unhealthy.push venue.name unless not isUnhealthy
+                neutral.push venue.name unless (isHealthy or isUnhealthy)
         
         checkinsData = JSON.parse results.get_Response()
         items = checkinsData.response.checkins.items
