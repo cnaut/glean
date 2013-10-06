@@ -25,6 +25,7 @@ function generateCharts(dataElement, prefix, scale) {
     generateChart(goal, "#" + prefix + "-goal-chart-div", prefix + "-goal-chart", scale);
     generateChart(predictedWeek, "#" + prefix + "-predictedweek-chart-div", prefix + "-predictedweek-chart", scale);
 
+    /**
     var lineGraph = d3.select("#" + prefix + "-line-graph")
 	.append("svg:svg"); 
 
@@ -35,6 +36,7 @@ function generateCharts(dataElement, prefix, scale) {
 	.attr("y2", y2 - 10)
 	.style("stroke", "red")
 	.style("stroke-width", 2);
+    **/
 }
 
 function generateChart(data, parentName, elementName, scale) {
