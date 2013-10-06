@@ -9,6 +9,10 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+#profile-summary {
+    padding-top: 20px;
+}
+
 /* Status.ejs */
 .data {
   display: none;

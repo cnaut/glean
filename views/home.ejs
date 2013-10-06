@@ -1,9 +1,23 @@
 <% include header.ejs %>
 
   <div class="data" id="weight-data" weekHigh="<%= weightData.weekHigh %>" weekLow="<%= weightData.weekLow %>" predictedData="<%= weightData.predictedData %>" percents="<%= weightData.percents %>" goal="<%= weightGoal %>" x1="<%= weightData.x1 %>" y1="<%= weightData.y1 %>" x2="<%= weightData.x2 %>" y2="<%= weightData.y2 %>"/></div> 
+  <% var activities = runData.activities; var thisWeek = runData.thisWeek; var lastWeek = runData.lastWeek; var weekDiff = runData.weekDiff %>
   
   <% include navbar.ejs %>
   <div class="container-fluid" id="content">
+    <div class="row-fluid" id="profile-summary">
+      <div class="span2 offset4">
+        <img id="profile-pic" width="230px" height="205px" src="http://s3.amazonaws.com/gleandocs/photos/charles.jpg" alt="Charles Naut" />
+      </div>
+
+      <div class="span2">
+        <h3>Charles Naut</h3>
+        <p><%= weightData.latest %> lbs</p>
+        <p>Last ran <%= activities[0].total_distance %> miles in  <%= activities[0].duration %> minutes, burning <%= activities[0].total_calories %> calories on <%= activities[0].date %> </p>
+        <p>Last checked in at <%= checkinData.checkinsData.response.checkins.items[0].venue.name %> </p>
+      </div>
+    </div>
+
     <div class="row-fluid">
       <div class=span12>
         <h2>Body Weight</h2>
@@ -36,15 +50,15 @@
         </span>
       </div>
     </div>
+
+    <h2>Run Stats</h2>
+    <% include runkeeper/weeklystats.ejs %>
+    <% include runkeeper/recentruns.ejs %>
+    
+    <% var healthy = checkinData.healthy; var healthyPoints = checkinData.healthyPoints; var unhealthy = checkinData.unhealthy; var unhealthyPoints = checkinData.unhealthyPoints; var neutral = checkinData.neutral; var netPoints = checkinData.netPoints; var pointsClass = checkinData.pointsClass %>
+    <% include foursquare/checkinsurplus.ejs %>
+
   </div>
-
-  <% var healthy = checkinData.healthy; var healthyPoints = checkinData.healthyPoints; var unhealthy = checkinData.unhealthy; var unhealthyPoints = checkinData.unhealthyPoints; var neutral = checkinData.neutral; var netPoints = checkinData.netPoints; var pointsClass = checkinData.pointsClass %>
-  <% include foursquare/checkinsurplus.ejs %>
-
-  <h2>Run Stats</h2>
-  <% var activities = runData.activities; var thisWeek = runData.thisWeek; var lastWeek = runData.lastWeek; var weekDiff = runData.weekDiff %>
-  <% include runkeeper/weeklystats.ejs %>
-  <% include runkeeper/recentruns.ejs %>
 
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <script src="js/main.js" charset="utf-8"></script>
