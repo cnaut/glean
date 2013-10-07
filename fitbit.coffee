@@ -1,10 +1,29 @@
-Fitbit = require("temboo/Library/Fitbit/Body")
+FitbitBody = require "temboo/Library/Fitbit/Body"
+FitbitFoods = require "temboo/Library/Fitbit/Foods"
 session = null
 
 setSession = (s) -> session = s
 
+getFoodData = (response) ->
+    getFoodsChoreo = new FitbitFoods.GetFoods session 
+    getFoodsInputs = getFoodsChoreo.newInputSet()
+
+    today = new Date()
+    date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (("0" + (today.getDate() - 1)).slice -2)
+    getFoodsInputs.setCredential 'Fitbit'
+    getFoodsInputs.set_Date date
+    console.log date
+    
+    getFoodsChoreo.execute(
+        getFoodsInputs,
+        ((results) ->
+            console.log results.get_Response()
+            response.render "calories", JSON.parse results.get_Response())
+        (error) -> consol.log error.message
+    )
+
 getBodyWeight = (callback) ->
-    getBodyWeightChoreo = new Fitbit.GetBodyWeight session
+    getBodyWeightChoreo = new FitbitBody.GetBodyWeight session
     getBodyWeightInputs = getBodyWeightChoreo.newInputSet()
 
     getBodyWeightInputs.setCredential 'Fitbit'
@@ -16,14 +35,13 @@ getBodyWeight = (callback) ->
     getBodyWeightChoreo.execute(
         getBodyWeightInputs,
         ((results) ->
-            
             weightData = handleBodyData results, "weight", kilosToPounds
             callback null, weightData),
         (error) -> console.log error.message
     )
 
 getBodyWeightGoal= (callback) ->
-    getBodyWeightGoalChoreo = new Fitbit.GetBodyWeightGoal session
+    getBodyWeightGoalChoreo = new FitbitBody.GetBodyWeightGoal session
     getBodyWeightGoalInputs = getBodyWeightGoalChoreo.newInputSet()
 
     getBodyWeightGoalInputs.setCredential 'Fitbit'
@@ -38,7 +56,7 @@ getBodyWeightGoal= (callback) ->
     )
 
 getBodyFat = (callback) ->
-    getBodyFatChoreo = new Fitbit.GetBodyFat session
+    getBodyFatChoreo = new FitbitBody.GetBodyFat session
     getBodyFatInputs = getBodyFatChoreo.newInputSet()
 
     getBodyFatInputs.setCredential 'Fitbit'
@@ -54,7 +72,7 @@ getBodyFat = (callback) ->
     (error) -> console.log error.message
 
 getBodyFatGoal = (callback) ->
-    getBodyFatGoalChoreo = new Fitbit.GetBodyFatGoal session
+    getBodyFatGoalChoreo = new FitbitBody.GetBodyFatGoal session
     getBodyFatGoalInputs = getBodyFatGoalChoreo.newInputSet()
 
     getBodyFatGoalInputs.setCredential 'Fitbit'
@@ -145,3 +163,4 @@ module.exports =
     getBodyWeightGoal: getBodyWeightGoal
     getBodyFat: getBodyFat
     getBodyFatGoal: getBodyFatGoal
+    getFoodData: getFoodData

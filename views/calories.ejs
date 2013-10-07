@@ -1,0 +1,11 @@
+<% include header.ejs %>
+  <% include navbar.ejs %>
+
+  <div>
+  <% for(var i = 0; i < foods.length; i++) { %> 
+    <p><%= foods[i].loggedFood.name %> - <%= foods[i].loggedFood.calories %>
+  <% } %>
+  <p><%= summary.calories %></p>
+  </div>
+
+<% include footer.ejs %>

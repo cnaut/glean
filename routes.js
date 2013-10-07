@@ -35,6 +35,10 @@ var fitbitfn = function(request, response) {
     });
 };
 
+var caloriesfn = function(request, response) {
+    fitbit.getFoodData(response);
+}
+
 var foursquarefn = function(request, response) {
     foursquare.getFoursquareData(response, "foursquare");
 };
@@ -53,6 +57,7 @@ var define_routes = function(dict) {
 var ROUTES = define_routes({
     '/': homefn,
     '/fitbit': fitbitfn,
+    '/calories': caloriesfn,
     '/foursquare': foursquarefn,
     '/runkeeper': runkeeperfn
 });
