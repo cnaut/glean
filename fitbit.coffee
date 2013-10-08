@@ -12,12 +12,10 @@ getFoodData = (response) ->
     date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (("0" + (today.getDate() - 1)).slice -2)
     getFoodsInputs.setCredential 'Fitbit'
     getFoodsInputs.set_Date date
-    console.log date
     
     getFoodsChoreo.execute(
         getFoodsInputs,
         ((results) ->
-            console.log results.get_Response()
             response.render "calories", JSON.parse results.get_Response())
         (error) -> consol.log error.message
     )

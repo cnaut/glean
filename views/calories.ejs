@@ -1,11 +1,24 @@
 <% include header.ejs %>
   <% include navbar.ejs %>
 
-  <div>
-  <% for(var i = 0; i < foods.length; i++) { %> 
-    <p><%= foods[i].loggedFood.name %> - <%= foods[i].loggedFood.calories %>
-  <% } %>
-  <p><%= summary.calories %></p>
+  <div class="container-fluid" id="content">
+    <div class="row-fluid" id="profile-summary">
+      <div class="span12">
+        <h2>Calories In</h2>
+        <table id="calories-table">
+            <% for(var i = 0; i < foods.length; i++) { %> 
+            <tr>
+                <td><%= foods[i].loggedFood.name %></td>
+                <td><%= foods[i].loggedFood.calories %></tr>
+            </tr>
+            <% } %>
+            <tr>
+                <th>Total</th>
+                <th><%= summary.calories %></th>
+            </tr>
+        </table>
+      </div>
+    </div>
   </div>
 
 <% include footer.ejs %>

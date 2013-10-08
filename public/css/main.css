@@ -97,3 +97,14 @@ body {
 .runs-table td, .runs-table th {
     padding: 6px;
 }
+
+/* calores.ejs */
+#calories-table {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+#calories-table td {
+    padding: 5px;
+}

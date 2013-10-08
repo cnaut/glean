@@ -20,9 +20,7 @@
     date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (("0" + (today.getDate() - 1)).slice(-2));
     getFoodsInputs.setCredential('Fitbit');
     getFoodsInputs.set_Date(date);
-    console.log(date);
     return getFoodsChoreo.execute(getFoodsInputs, (function(results) {
-      console.log(results.get_Response());
       return response.render("calories", JSON.parse(results.get_Response()));
     }), function(error) {
       return consol.log(error.message);
