@@ -13,7 +13,9 @@
       <div class="span2">
         <h3>Charles Naut</h3>
         <p><%= weightData.latest %> lbs</p>
+        <% if(activities[0]) { %>
         <p>Last ran <%= activities[0].total_distance %> miles in  <%= activities[0].duration %> minutes, burning <%= activities[0].total_calories %> calories on <%= activities[0].date %> </p>
+        <% } %>  
         <p>Last checked in at <%= checkinData.checkinsData.response.checkins.items[0].venue.name %> </p>
       </div>
     </div>
