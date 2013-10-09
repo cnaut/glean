@@ -1,5 +1,6 @@
 FitbitBody = require "temboo/Library/Fitbit/Body"
 FitbitFoods = require "temboo/Library/Fitbit/Foods"
+FitbitActivities = require "temboo/Library/Fitbit/Activities"
 session = null
 
 setSession = (s) -> session = s
@@ -7,17 +8,29 @@ setSession = (s) -> session = s
 getFoodData = (response) ->
     getFoodsChoreo = new FitbitFoods.GetFoods session 
     getFoodsInputs = getFoodsChoreo.newInputSet()
+    
+    getActivitiesChoreo = new FitbitActivities.GetActivities session
+    getActivitiesInputs = getActivitiesChoreo.newInputSet()
 
     today = new Date()
     date = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (("0" + (today.getDate() - 1)).slice -2)
     getFoodsInputs.setCredential 'Fitbit'
     getFoodsInputs.set_Date date
-    
+
+    getActivitiesInputs.setCredential 'Fitbit'
+    getActivitiesInputs.set_Date date
+
     getFoodsChoreo.execute(
         getFoodsInputs,
         ((results) ->
-            response.render "calories", JSON.parse results.get_Response())
-        (error) -> consol.log error.message
+            getActivitiesChoreo.execute(
+                getActivitiesInputs,
+                ((results2) ->
+                    console.log results2.get_Response()
+                    response.render "calories", {caloriesIn: JSON.parse(results.get_Response()), caloriesOut: JSON.parse results2.get_Response()} ),
+                (error2) -> console.log error.message
+            ))
+        (error) -> console.log error.message
     )
 
 getBodyWeight = (callback) ->

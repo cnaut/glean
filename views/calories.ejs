@@ -6,17 +6,30 @@
       <div class="span12">
         <h2>Calories In</h2>
         <table id="calories-table">
-            <% for(var i = 0; i < foods.length; i++) { %> 
+            <% for(var i = 0; i < caloriesIn.foods.length; i++) { %> 
             <tr>
-                <td><%= foods[i].loggedFood.name %></td>
-                <td><%= foods[i].loggedFood.calories %></tr>
+                <td><%= caloriesIn.foods[i].loggedFood.name %></td>
+                <td><%= caloriesIn.foods[i].loggedFood.calories %></tr>
             </tr>
             <% } %>
             <tr>
                 <th>Total</th>
-                <th><%= summary.calories %></th>
+                <th><%= caloriesIn.summary.calories %></th>
             </tr>
         </table>
+        
+        <h2>Calories Out</h2>
+        <table id="calories-table">
+            <% for(var i = 0; i < caloriesOut.activities.length; i++) { %> 
+            <tr>
+                <td><%= caloriesOut.activities[i].name %></td>
+                <td><%= caloriesOut.activities[i].calories %></tr>
+            </tr>
+            <% } %>
+            <tr>
+                <th>Total</th>
+                <th><%= caloriesOut.summary.caloriesOut %></th>
+            </tr>
       </div>
     </div>
   </div>
