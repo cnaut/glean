@@ -19,6 +19,8 @@ var homefn = function(request, response) {
         checkinData: foursquare.getFoursquareData
     },
     function(err, results) {
+        console.log(results.runData);
+        console.log(results.runData.activities);
         response.render("home", results);
     });
 }
