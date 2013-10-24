@@ -2,6 +2,7 @@ var uu		= require('underscore'),
     fitbit      = require('./fitbit'),
     foursquare	= require('./foursquare'),
     runkeeper	= require('./runkeeper'),
+    mailer      = require('./mailer'),
     async	= require('async');
 
 var tsession = require("temboo/core/temboosession");
@@ -49,6 +50,10 @@ var runkeeperfn = function(request, response) {
     runkeeper.getRunkeeperData(response, "runkeeper");
 }
 
+var sendmailfn = function(request, response) {
+    mailer.sendMail();
+}
+
 var define_routes = function(dict) {
     var toroute = function(item) {
 	return uu.object(uu.zip(['path', 'fn'], [item[0], item[1]]));
@@ -61,7 +66,8 @@ var ROUTES = define_routes({
     '/fitbit': fitbitfn,
     '/calories': caloriesfn,
     '/foursquare': foursquarefn,
-    '/runkeeper': runkeeperfn
+    '/runkeeper': runkeeperfn,
+    '/sendmail': sendmailfn
 });
 
 module.exports = ROUTES;
