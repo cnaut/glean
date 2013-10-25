@@ -1,0 +1,1 @@
+* * * * * /home/ubuntu/.nvm/v0.10.12/bin/node /home/ubuntu/glean/mailerjob.js 
