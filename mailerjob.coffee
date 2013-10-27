@@ -1,5 +1,8 @@
 nodemailer = require "nodemailer"
 
+cronJob = require('cron').CronJob
+
+
 transport = nodemailer.createTransport("SES",
     AWSAccessKeyID: process.env.AWS_AccessKey
     AWSSecretKey: process.env.AWS_SecretKey
@@ -11,10 +14,13 @@ mailOptions =
     subject: "Glean Update"
     text: "You are awesome"
 
-transport.sendMail mailOptions, (error, response) -> (
-    if error
-        console.log error
-    else
-        console.log "Message sent " + response.message)
+new cronJob '* 1 * * * *', (()  ->
+    transport.sendMail mailOptions, (error, response) -> (
+        if error
+            console.log error
+        else
+            console.log "Message sent " + response.message)
     
-transport.close()
+    transport.close())
+, null, true, "America/Los_Angeles"
+
